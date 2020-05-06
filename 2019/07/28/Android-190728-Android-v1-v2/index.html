@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="littlegrow" />
+
+
+
+<meta name="description" content="发布APK是需要签名的, 签名机制标明了APK的发行机构，在Android应用和框架中有着十分重要的作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 签名和多渠道打包">
+<meta property="og:url" content="https://littlegrow.top/2019/07/28/Android-190728-Android-v1-v2/index.html">
+<meta property="og:site_name" content="刘雷刚的博客">
+<meta property="og:description" content="发布APK是需要签名的, 签名机制标明了APK的发行机构，在Android应用和框架中有着十分重要的作用">
+<meta property="og:locale" content="ch">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190806103143_1984930a-9b92-4060-8f3c-2ebe79a7e759.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190806103736_6d070105-e239-4ce3-9f33-395f0ac590cf.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190806104206_23d4f1f3-6a03-4f25-8acd-e6c534977d9b.webp">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190729141512_a57eb2b5-764f-4135-afda-814f86920df7.png">
+<meta property="article:published_time" content="2019-07-28T07:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:13:30.910Z">
+<meta property="article:author" content="littlegrow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haitao.nos.netease.com/20190806103143_1984930a-9b92-4060-8f3c-2ebe79a7e759.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="刘雷刚的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Android 签名和多渠道打包 | 刘雷刚的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">littlegrow</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                            <li><a href="/collect/">收藏</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/littlegrow">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">Yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">保持专注，做最好的自己</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">littlegrow</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">littlegrow</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                    <li><a href="/collect/">收藏</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android-190728-Android-v1-v2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/07/28/Android-190728-Android-v1-v2/" class="article-date">
+      <time datetime="2019-07-28T07:00:00.000Z" itemprop="datePublished">2019-07-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 签名和多渠道打包
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/APK%E7%AD%BE%E5%90%8D/">APK签名</a><a class="article-category-link" href="/categories/APK%E7%AD%BE%E5%90%8D/V1V2/">V1V2</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Android Studio 2.2以上版本打包apk的时候，我们会发现多了个签名版本（v1、v2）选择，如下图红色方框所示<br><img src="https://haitao.nos.netease.com/20190806103143_1984930a-9b92-4060-8f3c-2ebe79a7e759.jpg" alt></p>
+<p>Android 7.0中引入了APK Signature Scheme v2，v1是jar Signature来自JDK。</p>
+<p>以下片段摘自谷歌开发者官网：</p>
+<pre><code>In case you want to disable adding v1 or v2 signatures when building with the Android Gradle plugin, you can add these lines to your signingConfig section in build.gradle:
+
+v1SigningEnabled false
+v2SigningEnabled false
+
+Note: both signing schemes are enabled by default in Android Gradle plugin 2.2.</code></pre><br>
+
+<h3 id="签名是什么"><a href="#签名是什么" class="headerlink" title="签名是什么"></a>签名是什么</h3><br>
+
+<p>签名是摘要与非对称密钥加密相相结合的产物，摘要就像内容的一个指纹信息，一旦内容被篡改，摘要就会改变，签名是摘要的加密结果，摘要改变，签名也会失效。Android APK签名也是这个道理，如果APK签名跟内容对应不起来，Android系统就认为APK内容被篡改了，从而拒绝安装，以保证系统的安全性。</p>
+<br>
+
+<p>V1签名通过META-INF中的三个文件保证签名及信息的完整性。<br><img src="https://haitao.nos.netease.com/20190806103736_6d070105-e239-4ce3-9f33-395f0ac590cf.jpg" alt></p>
+<pre><code>MANIFEST.MF：摘要文件，存储文件名与文件SHA1摘要（Base64格式）键值对
+CERT.SF：二次摘要文件，存储文件名与MANIFEST.MF摘要条目的SHA1摘要（Base64格式）键值对
+CERT.RSA 证书（公钥）及签名文件，存储keystore的公钥、发行信息、以及对CERT.SF文件摘要的签名信息（利用keystore的私钥进行加密过）</code></pre><br>
+
+<p>v2签名方案进行签名时，会在APK文件中插入一个APK签名分块，该分块位于zip中央目录部分之前并紧邻该部分。在APK签名分块内，签名和签名者身份信息会存储在APK签名方案v2分块中，保证整个APK文件不可修改；<br><img src="https://haitao.nos.netease.com/20190806104206_23d4f1f3-6a03-4f25-8acd-e6c534977d9b.webp" alt></p>
+<p><br><br></p>
+<h3 id="为什么签名"><a href="#为什么签名" class="headerlink" title="为什么签名"></a>为什么签名</h3><br>
+
+<p>拥有线上APP开发经验的Android开发工程师都清楚，Android系统禁止安装签名不一致的应用，一般开发过程中使用测试签名，应用上线时使用正式签名。<br>要破解一个APK，必然需要进行APK签名，一般情况无法再与APK原先的签名保持一致，出于软件安全的角度，我们就可以通过比对APK的签名情况，判断APK是否“官方”发行。</p>
+<p><br><br></p>
+<h3 id="渠道打包"><a href="#渠道打包" class="headerlink" title="渠道打包"></a>渠道打包</h3><br>
+
+<h4 id="v1和v2的签名使用"><a href="#v1和v2的签名使用" class="headerlink" title="v1和v2的签名使用"></a>v1和v2的签名使用</h4><br>
+
+<pre><code>1. 只勾选v1签名并不会影响什么，但是在7.0上不会使用更安全的验证方式
+2. 只勾选V2签名7.0以下会直接安装完显示未安装，7.0以上则使用了V2的方式验证
+3. 同时勾选V1和V2则所有机型都没问题</code></pre><br>
+
+<h4 id="多渠道打包"><a href="#多渠道打包" class="headerlink" title="多渠道打包"></a>多渠道打包</h4><br>
+
+<p>传统的打包方法是在AndroidManifest添加渠道标示，每打一次包修改一次标示的名称。效率特别低，一个稍微大一点的项目打上几十个渠道包可能需要几个小时半天的时间。</p>
+<p><font color="red">注：仅使用V1签名多渠道打包可以在 <code>META-INF</code> 目录下创建一个带有渠道标识的空文件，这里不再讨论</font> </p>
+<p><br><br></p>
+<h5 id="我的多渠道打包方案"><a href="#我的多渠道打包方案" class="headerlink" title="我的多渠道打包方案"></a>我的多渠道打包方案</h5><br>
+
+<p>在<a href="https://www.qiushibaike.com/" target="_blank" rel="noopener">糗事百科</a>工作时，负责Android项目的打包发布工作，下面简单介绍下我这边如何支持多渠道打包。</p>
+<p>我们知道使用V2签名后的APK文件不能再修改，但如果先对文件进行修改，而后再进行签名就不会出现任何问题。</p>
+<br>
+
+<p>主要打包流程如下图：<br><img src="https://haitao.nos.netease.com/20190729141512_a57eb2b5-764f-4135-afda-814f86920df7.png" alt></p>
+<p>优点：这种方式仅需要一次打包，解决了V2签名后不能再修改的问题，打出基础包耗时2min左右，每修改并签名一个渠道包耗时10～15秒，渠道总量在200以内，20min内可以打出全量包。</p>
+<p>缺点：每个渠道包均需要签名，耗时较长</p>
+<p><br><br></p>
+<h5 id="美团多渠道打包原理"><a href="#美团多渠道打包原理" class="headerlink" title="美团多渠道打包原理"></a>美团多渠道打包原理</h5><p>Android应用使用的APK文件就是一个带签名信息的ZIP文件，根据ZIP文件格式规范，每个ZIP文件的最后都必须有一个叫 Central Directory Record 的部分，这个CDR的最后部分叫”end of central directory record”，这一部分包含一些元数据，它的末尾是ZIP文件的注释。注释包含Comment Length和File Comment两个字段，前者表示注释内容的长度，后者是注释的内容，正确修改这一部分不会对ZIP文件造成破坏，利用这个字段，我们可以添加一些自定义的数据，原理很简单，就是将渠道信息存放在APK文件的注释字段中。</p>
+<p>详细打包过程及配置可查看<a href="https://github.com/mcxiaoke/packer-ng-plugin" target="_blank" rel="noopener">packer-ng-plugin</a></p>
+<p><br><br></p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><br>
+
+<p><a href="https://android-developers.googleblog.com/2016/11/understanding-apk-packaging-in-android-studio-2-2.html" target="_blank" rel="noopener">APK packaging in Android Studio 2.2</a><br><a href="https://www.jianshu.com/p/95096ca209e1" target="_blank" rel="noopener">Android V1及V2签名原理简析</a><br><a href="https://www.cnblogs.com/pulove/p/5783693.html" target="_blank" rel="noopener">Android签名机制</a><br><a href="https://www.jianshu.com/p/fe20417337e0" target="_blank" rel="noopener">Android多渠道打包:美团多渠道打包原理以及使用</a></p>
+<p><br><br><br><br><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
+        <p><span>发布时间:</span>2019-07-28, 15:00:00</p>
+        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/07/28/Android-190728-Android-v1-v2/" title="Android 签名和多渠道打包">https://littlegrow.top/2019/07/28/Android-190728-Android-v1-v2/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/07/28/Android-190728-Android-v1-v2/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">
+                    Python实现常见算法
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">
+                    时间戳和日期字符串快速转换
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#签名是什么"><span class="toc-number">1.</span> <span class="toc-text">签名是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么签名"><span class="toc-number">2.</span> <span class="toc-text">为什么签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渠道打包"><span class="toc-number">3.</span> <span class="toc-text">渠道打包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#v1和v2的签名使用"><span class="toc-number">3.1.</span> <span class="toc-text">v1和v2的签名使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多渠道打包"><span class="toc-number">3.2.</span> <span class="toc-text">多渠道打包</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#我的多渠道打包方案"><span class="toc-number">3.2.1.</span> <span class="toc-text">我的多渠道打包方案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#美团多渠道打包原理"><span class="toc-number">3.2.2.</span> <span class="toc-text">美团多渠道打包原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文档"><span class="toc-number">4.</span> <span class="toc-text">参考文档</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+
+
+    
+      <section id="comments" style="margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)">
+    <div id="vcomment" class="comment"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@1.1.9/dist/Valine.min.js"></script>
+    <script>
+		new Valine({
+			el: '#vcomment',
+			notify: 'true',
+			verify: 'false',
+			app_id: "RWJCM9UQW07DGPJGy2xvOQ7l-gzGzoHsz",
+			app_key: "EY1VbDQQchduEg09LGaC8uPq",
+			placeholder: "说点什么吧...",
+			avatar: "mp"
+		});
+		// 去除 power by valine
+	    var infoEle = document.querySelector('#comments .info');
+	    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+	      infoEle.childNodes.forEach(function(item) {
+	        item.parentNode.removeChild(item);
+	      });
+	    }
+    </script>
+</section>
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/" title="上一篇: Python实现常见算法">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/" title="下一篇: 时间戳和日期字符串快速转换">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">我的工具库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">钉钉机器人发送消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/java-190918-hashmap/">JDK1.8 HashMap tableSizeFor()、hash() 方法梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">okio 简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">Java NIO 使用初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">CountDownLatch、Semaphore、CyclicBarrier</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/02/%E5%B9%B6%E5%8F%91-190830-java-lock/">JAVA锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">java实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/third-190828-okhttp/">OKHTTP简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/23/common-190823-threadpool/">JAVA线程池</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">生产者消费者模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/19/Android-20180819-start-activity/">Activity启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/16/mock-data-md/">一种快速 mock 数据的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/shell-190814-%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%91%BD%E4%BB%A4/">shell命令集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/08/server-190808-%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Virtualview-tools%E6%8F%90%E4%BE%9B%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%BC%96%E8%AF%91Tangram%E7%BB%84%E4%BB%B6/">如何在后端服务中集成virtualview_tools编译Tangram组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/Android-190805-RecyclerView%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86/">RecyclerView ViewHoler 缓存机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/server-190806-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/">后端服务快速接入二维码功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">Android Intent 传递数据限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">时间戳和日期字符串快速转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/Android-190726-MemCache/">客户端支持带过期时间的缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">排序算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/24/hello-world/">hexo简单使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2020 littlegrow  
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802010091">
+                    &nbsp;&nbsp;
+                    <img src="https://haitao.nos.netease.com/20190816112710_607bb2b9-eb68-46f7-a443-8f2dbbc2e20c.png" style="height:20px"/>
+                    浙公网安备 33010802010091号
+                </a>  
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

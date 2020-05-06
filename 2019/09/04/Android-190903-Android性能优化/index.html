@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="littlegrow" />
+
+
+
+<meta name="description" content="总结Android性能优化相关知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android性能优化总结">
+<meta property="og:url" content="https://littlegrow.top/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="刘雷刚的博客">
+<meta property="og:description" content="总结Android性能优化相关知识">
+<meta property="og:locale" content="ch">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190904145340_2f54ce48-25af-4fea-a42e-b068bd2f1419.jpg">
+<meta property="article:published_time" content="2019-09-04T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:13:30.911Z">
+<meta property="article:author" content="littlegrow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haitao.nos.netease.com/20190904145340_2f54ce48-25af-4fea-a42e-b068bd2f1419.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="刘雷刚的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Android性能优化总结 | 刘雷刚的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">littlegrow</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                            <li><a href="/collect/">收藏</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/littlegrow">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">Yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">保持专注，做最好的自己</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">littlegrow</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">littlegrow</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                    <li><a href="/collect/">收藏</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android-190903-Android性能优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="article-date">
+      <time datetime="2019-09-04T11:00:00.000Z" itemprop="datePublished">2019-09-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android性能优化总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h3><br>
+
+<p>作为客户端开发工程师，要始终把用户体验放在重要位置，尽可能开发运行稳定、用户体验好的应用。<br>可从以下几个方面不停优化应用：</p>
+<ul>
+<li>APP体验流畅，不存在卡顿问题</li>
+<li>省电，省流量</li>
+<li>运行稳定，不闪退(减少闪退、ANR)</li>
+<li>安装包大小尽可能小，降低推广难度</li>
+</ul>
+<br>
+
+<h3 id="卡顿优化"><a href="#卡顿优化" class="headerlink" title="卡顿优化"></a>卡顿优化</h3><br>
+
+<p>应用经常卡顿，定会影响用户体验，如果不是必须要安装使用您的应用，谁也不想再次打开，所以要尽全力保证应用流畅运行。</p>
+<br>
+
+<p>可能造成应用卡顿的情景有：</p>
+<ul>
+<li>UI嵌套层级过多或绘制不必要的视图背景</li>
+<li>主线程处理太多耗时任务</li>
+<li>数据处理占用CPU，主线程获取不到CPU资源</li>
+<li>频繁触发GC，线程频繁停滞运行</li>
+</ul>
+<br>
+
+<p>Android 系统每隔 16ms 发出 VSYNC 信号，触发对UI进行渲染，如果每次渲染都成功，这样就能够达到流畅的画面所需的 60FPS。在理想情况下，60 FPS 就感觉不到卡，这意味着每个绘制时长应该在16 ms 以内，但是 Android 系统很有可能无法及时完成那些复杂的页面渲染操作，就会造成卡顿。</p>
+<br>
+
+<p>卡顿优化方案总结</p>
+<ul>
+<li>尽量减少UI布局层次，去掉不必要的嵌套</li>
+<li>自定义UI避免在绘制过程频繁创建对象</li>
+<li>暂时不需显示的视图可使用ViewStub，仅在需要显示的时候加载</li>
+<li>层级相同时尽量使用绝对位置布局，而不是RelativeLayout</li>
+<li>不要在主线程进行数据解析或其他耗时的任务</li>
+<li>尽量减少页面刷新次数，针对列表多尝试item刷新，而不是全部刷新</li>
+<li>尽量不要在循环中创建大内存对象</li>
+<li>不再使用的资源要主动释放，不能完全依赖系统GC</li>
+<li>数据处理方面可考虑采用缓存，避免重复计算</li>
+</ul>
+<br>
+
+<p>使用工具：</p>
+<p><code>开发人员选项</code> -&gt; <code>GPU呈现模式分析</code> -&gt; <code>在屏幕上显示为条形图</code></p>
+<p><img src="https://haitao.nos.netease.com/20190904145340_2f54ce48-25af-4fea-a42e-b068bd2f1419.jpg" alt></p>
+<p>绿线代表16ms，要确保1s内达到60fps，你需要确保这些帧的每一条线都在绿色的16ms标记线之下。</p>
+<br>
+
+<p><code>开发人员选项</code> -&gt; <code>调试GPU过度绘制</code> -&gt; <code>显示过度绘制区域</code></p>
+<pre><code>原色：没有过度绘制
+蓝色：1 次过度绘制
+绿色：2 次过度绘制
+粉色：3 次过度绘制
+红色：4 次及以上过度绘制</code></pre><br>
+
+<h3 id="电量优化"><a href="#电量优化" class="headerlink" title="电量优化"></a>电量优化</h3><br>
+
+<p>对应用来说，电量的使用是不能忽略的问题，如果应用耗电太多，很容易被用户卸载。<br>耗电的原因多种多样，仅总结比较常见的优化方案：</p>
+<ul>
+<li>将一些不需要及时使用的资源放到充电时候处理，使用JobScheduler</li>
+<li>合理使用WakeLock(应用申请了WakeLock，在释放之前，系统不会休眠，即使在灭屏的状态下，应用执行的任务依旧不会被系统打断)</li>
+<li>网络上数据大量传输，尽量传输压缩后的数据</li>
+<li>尽量避开浮点运算，特定情况下使用移位操作代算术运算</li>
+</ul>
+<br>
+
+<h3 id="流量优化"><a href="#流量优化" class="headerlink" title="流量优化"></a>流量优化</h3><br>
+
+<p>应用消耗过多流量，也会引起用户的不满，因此我要尽一切可能减少对用户数据流量的消耗。</p>
+<p>一般有以下几种方案：</p>
+<ul>
+<li>对于无需频繁刷新的数据，本地缓存，设置过期时间，避免多次无效请求</li>
+<li>对于暂时不会用到的资源数据，可在WI-FI网络环境下自动下载；在移动网络环境下且未下载时用到相关资源告知用户下载所需流量，用户点击确认下载，否则使用本地默认替代方案</li>
+<li>对于有时效性的数据，可考虑在客户端实现带过期时间的缓存，缓存有效期内避免多次请求网络数据</li>
+</ul>
+<br>
+
+<h3 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h3><br>
+
+<p>开发过程中，如果内存使用不当，极易造成内存泄漏，引发OOM问题，总结了以下内存泄漏常发生的情景及解决方案</p>
+<br>
+
+<h4 id="泄漏情景"><a href="#泄漏情景" class="headerlink" title="泄漏情景"></a>泄漏情景</h4><br>
+
+<ul>
+<li>单例模式中引用Context，使用过后没有主动释放资源</li>
+<li>资源对象使用过未关闭，如文件、Stream、数据库连接等</li>
+<li>注册的事件在页面关闭时未销毁</li>
+<li>非静态Handler导致Activity未被回收</li>
+<li>容器中的对象未清理导致内存泄漏</li>
+</ul>
+<br>
+
+<h4 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a>优化方案</h4><br>
+
+<ul>
+<li>再适合的场景使用不同的引用类型</li>
+<li>使用图片资源时，使用恰当尺寸的图片</li>
+<li>资源对象使用后主动关闭及释放资源</li>
+<li>使用静态内部类代替匿名内部类</li>
+</ul>
+<br>
+
+<h3 id="稳定性优化"><a href="#稳定性优化" class="headerlink" title="稳定性优化"></a>稳定性优化</h3><br>
+
+<p>Android 应用的稳定性定义很宽泛，影响稳定性的原因很多，比如内存使用不合理、代码异常场景考虑不周全、代码逻辑不合理等，都会对应用的稳定性造成影响。其中最常见的两个场景是：Crash 和 ANR，这两个错误将会使得程序无法使用，比较常用的解决方式如下：</p>
+<ul>
+<li>提高代码质量，开发过程中交叉Review</li>
+<li>借助代码静态扫描工具，如 Android Lint等</li>
+<li>crash上报，在开发和灰度阶段暴漏问题，正式发布前修复</li>
+</ul>
+<br>
+
+<h3 id="APK大小优化"><a href="#APK大小优化" class="headerlink" title="APK大小优化"></a>APK大小优化</h3><br>
+
+<p>安装包越大，应用推广难度越高，所以尽一切可能对自己的应用瘦身。</p>
+<p>可采取以下方案：</p>
+<ul>
+<li>一些资源文件放到服务端，需要时下发</li>
+<li>对图片资源进行无损压缩，如tinypng等</li>
+<li>删除无用代码及不再使用的资源</li>
+</ul>
+<br>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><br>
+
+<p>性能优化是一个循序渐进的过程，并不是一两天就能搞定，所以从日常开发中做起，每天积累，开发更稳定的应用，给用户提供更好的体验。</p>
+<p><br><br><br><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
+        <p><span>发布时间:</span>2019-09-04, 19:00:00</p>
+        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="Android性能优化总结">https://littlegrow.top/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">
+                    Java NIO 使用初探
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">
+                    CountDownLatch、Semaphore、CyclicBarrier
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#优化目标"><span class="toc-number">1.</span> <span class="toc-text">优化目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卡顿优化"><span class="toc-number">2.</span> <span class="toc-text">卡顿优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电量优化"><span class="toc-number">3.</span> <span class="toc-text">电量优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#流量优化"><span class="toc-number">4.</span> <span class="toc-text">流量优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内存优化"><span class="toc-number">5.</span> <span class="toc-text">内存优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#泄漏情景"><span class="toc-number">5.1.</span> <span class="toc-text">泄漏情景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化方案"><span class="toc-number">5.2.</span> <span class="toc-text">优化方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳定性优化"><span class="toc-number">6.</span> <span class="toc-text">稳定性优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APK大小优化"><span class="toc-number">7.</span> <span class="toc-text">APK大小优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+
+
+    
+      <section id="comments" style="margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)">
+    <div id="vcomment" class="comment"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@1.1.9/dist/Valine.min.js"></script>
+    <script>
+		new Valine({
+			el: '#vcomment',
+			notify: 'true',
+			verify: 'false',
+			app_id: "RWJCM9UQW07DGPJGy2xvOQ7l-gzGzoHsz",
+			app_key: "EY1VbDQQchduEg09LGaC8uPq",
+			placeholder: "说点什么吧...",
+			avatar: "mp"
+		});
+		// 去除 power by valine
+	    var infoEle = document.querySelector('#comments .info');
+	    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+	      infoEle.childNodes.forEach(function(item) {
+	        item.parentNode.removeChild(item);
+	      });
+	    }
+    </script>
+</section>
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/" title="上一篇: Java NIO 使用初探">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/" title="下一篇: CountDownLatch、Semaphore、CyclicBarrier">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">我的工具库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">钉钉机器人发送消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/java-190918-hashmap/">JDK1.8 HashMap tableSizeFor()、hash() 方法梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">okio 简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">Java NIO 使用初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">CountDownLatch、Semaphore、CyclicBarrier</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/02/%E5%B9%B6%E5%8F%91-190830-java-lock/">JAVA锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">java实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/third-190828-okhttp/">OKHTTP简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/23/common-190823-threadpool/">JAVA线程池</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">生产者消费者模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/19/Android-20180819-start-activity/">Activity启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/16/mock-data-md/">一种快速 mock 数据的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/shell-190814-%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%91%BD%E4%BB%A4/">shell命令集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/08/server-190808-%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Virtualview-tools%E6%8F%90%E4%BE%9B%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%BC%96%E8%AF%91Tangram%E7%BB%84%E4%BB%B6/">如何在后端服务中集成virtualview_tools编译Tangram组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/Android-190805-RecyclerView%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86/">RecyclerView ViewHoler 缓存机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/server-190806-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/">后端服务快速接入二维码功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">Android Intent 传递数据限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">时间戳和日期字符串快速转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/Android-190726-MemCache/">客户端支持带过期时间的缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">排序算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/24/hello-world/">hexo简单使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2020 littlegrow  
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802010091">
+                    &nbsp;&nbsp;
+                    <img src="https://haitao.nos.netease.com/20190816112710_607bb2b9-eb68-46f7-a443-8f2dbbc2e20c.png" style="height:20px"/>
+                    浙公网安备 33010802010091号
+                </a>  
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

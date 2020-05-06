@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="littlegrow" />
+
+
+
+<meta name="description" content="StringBuffer线程安全，StringBuilder线程不安全，这个结论都是知道的。StringBuffer为什么线程不安全？既然线程不安全为什么还有存在必要，而不全使用StringBuffer?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StringBuffer、StringBuilder写入性能及线程安全总结">
+<meta property="og:url" content="https://littlegrow.top/2019/09/19/java-190919-builder-buffer/index.html">
+<meta property="og:site_name" content="刘雷刚的博客">
+<meta property="og:description" content="StringBuffer线程安全，StringBuilder线程不安全，这个结论都是知道的。StringBuffer为什么线程不安全？既然线程不安全为什么还有存在必要，而不全使用StringBuffer?">
+<meta property="og:locale" content="ch">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190919113200_8becf919-9780-425b-8c8c-a777f7cd0f64.jpg">
+<meta property="article:published_time" content="2019-09-19T11:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:13:30.913Z">
+<meta property="article:author" content="littlegrow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haitao.nos.netease.com/20190919113200_8becf919-9780-425b-8c8c-a777f7cd0f64.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="刘雷刚的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>StringBuffer、StringBuilder写入性能及线程安全总结 | 刘雷刚的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">littlegrow</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                            <li><a href="/collect/">收藏</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/littlegrow">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">Yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">保持专注，做最好的自己</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">littlegrow</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">littlegrow</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                    <li><a href="/collect/">收藏</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-java-190919-builder-buffer" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/09/19/java-190919-builder-buffer/" class="article-date">
+      <time datetime="2019-09-19T11:00:00.000Z" itemprop="datePublished">2019-09-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      StringBuffer、StringBuilder写入性能及线程安全总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/StringBuffer/">StringBuffer</a><a class="article-category-link" href="/categories/StringBuffer/StringBuilder/">StringBuilder</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="StringBuffer、StringBuilder必要性"><a href="#StringBuffer、StringBuilder必要性" class="headerlink" title="StringBuffer、StringBuilder必要性"></a><code>StringBuffer</code>、<code>StringBuilder</code>必要性</h3><br>
+
+<p>JAVA 中对<code>String</code>的定义如下代码片段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final class String implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence &#123;</span><br><span class="line">    &#x2F;** The value is used for character storage. *&#x2F;</span><br><span class="line">    private final char value[];</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从定义看到，<code>String</code> 是不可变的。当多个字符串进行拼接操作时，将产生很多无用的中间变量，这些中间变量不仅浪费存储空间，也会加重垃圾回收的负担，而字符串拼接场景在日常开发中是极其常见的。因此需要有可变的字符类型来处理这部分操作，这就是<code>StringBuffer</code>、<code>StringBuilder</code>存在的必要性，均继承至<code>AbstractStringBuilder</code>，继承结构如下图：</p>
+<p><img src="https://haitao.nos.netease.com/20190919113200_8becf919-9780-425b-8c8c-a777f7cd0f64.jpg" alt></p>
+<p><code>StringBuilder</code>线程不安全，<code>StringBuffer</code>线程安全，这个结论都是知道的，为什么要这么设计呢？</p>
+<br>
+
+<h3 id="编码测试写入性能及线程安全性"><a href="#编码测试写入性能及线程安全性" class="headerlink" title="编码测试写入性能及线程安全性"></a>编码测试写入性能及线程安全性</h3><br>
+
+<p>为了方便统计耗时，先实现一个时间计算工具类，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class TimeDelta &#123;</span><br><span class="line"></span><br><span class="line">    private long time;</span><br><span class="line"></span><br><span class="line">    public TimeDelta() &#123;</span><br><span class="line">        this.time &#x3D; System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 获取一段时间间隔</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public long getDelta() &#123;</span><br><span class="line">        return System.currentTimeMillis() - time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void renew() &#123;</span><br><span class="line">        time &#x3D; System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写数据使用100个线程，每个线程写入10000个字符，测试代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">public class StringBufferBuilderTest &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 测试线程个数</span><br><span class="line">     *&#x2F;</span><br><span class="line">    static final int THREAD_COUNT &#x3D; 100;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 记录执行耗时</span><br><span class="line">     *&#x2F;</span><br><span class="line">    static TimeDelta timeDelta &#x3D; new TimeDelta();</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 测试 StringBuffer 写入性能及线程安全</span><br><span class="line">     *</span><br><span class="line">     * @throws InterruptedException</span><br><span class="line">     *&#x2F;</span><br><span class="line">    static void testStringBuffer() throws InterruptedException &#123;</span><br><span class="line">        timeDelta.renew();</span><br><span class="line">        CountDownLatch countDownLatch &#x3D; new CountDownLatch(THREAD_COUNT);</span><br><span class="line">        StringBuffer buffer &#x3D; new StringBuffer();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; THREAD_COUNT; i++) &#123;</span><br><span class="line">            new Thread(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    for (int j &#x3D; 0; j &lt; THREAD_COUNT * 100; j++) &#123;</span><br><span class="line">                        buffer.append(&#39;a&#39;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    countDownLatch.countDown();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        System.out.println(&quot;StringBuffer: 耗时 &quot; + timeDelta.getDelta() + &quot;ms&quot;);</span><br><span class="line">        System.out.println(&quot;StringBuffer: 大小 &quot; + buffer.length() + &#39;\n&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 测试 StringBuilder 写入性能及线程安全</span><br><span class="line">     *</span><br><span class="line">     * @throws InterruptedException</span><br><span class="line">     *&#x2F;</span><br><span class="line">    static void testStringBuilder() throws InterruptedException &#123;</span><br><span class="line">        timeDelta.renew();</span><br><span class="line">        CountDownLatch countDownLatch &#x3D; new CountDownLatch(THREAD_COUNT);</span><br><span class="line">        StringBuilder builder &#x3D; new StringBuilder();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; THREAD_COUNT; i++) &#123;</span><br><span class="line">            new Thread(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    for (int j &#x3D; 0; j &lt; THREAD_COUNT * 100; j++) &#123;</span><br><span class="line">                        builder.append(&#39;a&#39;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    countDownLatch.countDown();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        System.out.println(&quot;StringBuilder: 耗时 &quot; + timeDelta.getDelta() + &quot;ms&quot;);</span><br><span class="line">        System.out.println(&quot;StringBuilder: 大小 &quot; + builder.length() + &#39;\n&#39;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">        System.out.println(String.format(&quot;测试StringBuffer、StringBuilder性能及线程安全\n写数据使用%s个线程，&quot; +</span><br><span class="line">                &quot;每个线程写入%s个字符\n&quot;, THREAD_COUNT, THREAD_COUNT * 100));</span><br><span class="line">        testStringBuffer();</span><br><span class="line">        testStringBuilder();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">注：使用<code>CountDownLatch</code>保证每个子线程写数据完毕后主线程继续执行打印缓存尺寸，保证输出准确。</font></p>
+<p>测试结果(不唯一)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">测试StringBuffer、StringBuilder性能及线程安全</span><br><span class="line">写数据使用100个线程，每个线程写入10000个字符</span><br><span class="line"></span><br><span class="line">StringBuffer: 耗时 177ms</span><br><span class="line">StringBuffer: 大小 1000000</span><br><span class="line"></span><br><span class="line">Exception in thread &quot;Thread-102&quot; java.lang.ArrayIndexOutOfBoundsException: 4606</span><br><span class="line">    at java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:650)</span><br><span class="line">    at java.lang.StringBuilder.append(StringBuilder.java:202)</span><br><span class="line">    at StringBuilderDemo.lambda$testStringBuilder$1(StringBuilderDemo.java:54)</span><br><span class="line">    at java.lang.Thread.run(Thread.java:748)</span><br><span class="line">StringBuilder: 耗时 37ms</span><br><span class="line">StringBuilder: 大小 874110</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">测试StringBuffer、StringBuilder性能及线程安全</span><br><span class="line">写数据使用100个线程，每个线程写入10000个字符</span><br><span class="line"></span><br><span class="line">StringBuffer: 耗时 221ms</span><br><span class="line">StringBuffer: 大小 1000000</span><br><span class="line"></span><br><span class="line">StringBuilder: 耗时 34ms</span><br><span class="line">StringBuilder: 大小 965353</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="测试结果分析"><a href="#测试结果分析" class="headerlink" title="测试结果分析"></a>测试结果分析</h3><br>
+
+<h4 id="写入性能"><a href="#写入性能" class="headerlink" title="写入性能"></a>写入性能</h4><br>
+
+<p>经多次执行测试代码，<code>StringBuilder</code>写入性能均是<code>StringBuffer</code>的5倍以上。</p>
+<p>写入数据调用<code>StringBuffer</code>的方法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public synchronized StringBuffer append(char c) &#123;</span><br><span class="line">    toStringCache &#x3D; null;</span><br><span class="line">    super.append(c);</span><br><span class="line">    return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写入数据调用<code>StringBuilder</code>的方法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public StringBuilder append(char c) &#123;</span><br><span class="line">    super.append(c);</span><br><span class="line">    return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从以上代码片段看出，<code>StringBuffer</code> 的 <code>append()</code> 方法均是用 <code>synchronized</code> 修饰的，使用同步锁保证线程安全，在多线程业务场景下存在锁竞争，所以性能不如<code>StringBuilder</code>。</p>
+<br>
+
+<h4 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h4><br>
+
+<p><code>StringBuilder</code> 的大小总是小于<code>1000000</code>，因此部分数据丢失。</p>
+<p>这个就很好理解了，<code>StringBuffer</code>使用同步锁保证线程安全，可为什么<code>StringBuilder</code>会丢失数据呢?</p>
+<p>我们看下 <code>super.append()</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public AbstractStringBuilder append(char c) &#123;</span><br><span class="line">    ensureCapacityInternal(count + 1);</span><br><span class="line">    value[count++] &#x3D; c;</span><br><span class="line">    return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>count++</code> 并不是原子操作，因此<code>StringBuilder</code>在多线程业务场景下可能存在数据覆盖写入的问题。</p>
+<br>
+
+<h4 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h4><br>
+
+<p><code>StringBuilder</code> 在多线程情景下可能会产生 <code>ArrayIndexOutOfBoundsException</code> 异常。</p>
+<p>由上一步分析<code>StringBuilder</code>多线程下会丢失数据，相比更为致命的是多线程情景下还会偶发异常，这是绝对不能接受的。为什么会有异常？</p>
+<p>我们看下<code>ensureCapacityInternal()</code>，当存储空间不够时用来扩容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private void ensureCapacityInternal(int minimumCapacity) &#123;</span><br><span class="line">    &#x2F;&#x2F; overflow-conscious code</span><br><span class="line">    if (minimumCapacity - value.length &gt; 0) &#123;</span><br><span class="line">        value &#x3D; Arrays.copyOf(value,</span><br><span class="line">                newCapacity(minimumCapacity));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int newCapacity(int minCapacity) &#123;</span><br><span class="line">    &#x2F;&#x2F; overflow-conscious code</span><br><span class="line">    int newCapacity &#x3D; (value.length &lt;&lt; 1) + 2;</span><br><span class="line">    if (newCapacity - minCapacity &lt; 0) &#123;</span><br><span class="line">        newCapacity &#x3D; minCapacity;</span><br><span class="line">    &#125;</span><br><span class="line">    return (newCapacity &lt;&#x3D; 0 || MAX_ARRAY_SIZE - newCapacity &lt; 0)</span><br><span class="line">        ? hugeCapacity(minCapacity)</span><br><span class="line">        : newCapacity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每次扩容后大小 <code>length * 2 + 2</code>，扩容非原子操作，且没有同步代码保护，因此扩容过程中其他线程并发写入可能会引发数组越界异常。</p>
+<br>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><br>
+
+<ol>
+<li>从源码层面上清楚了<code>StringBuilder</code>线程不安全，<code>StringBuffer</code>线程安全</li>
+<li>单线程业务场景下尽可能使用<code>StringBuilder</code>以提高性能</li>
+<li>多线程业务场景下使用<code>StringBuilder</code>会带来数据丢失和数组越界问题，只能使用<code>StringBuffer</code></li>
+</ol>
+<p><br><br><br><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
+        <p><span>发布时间:</span>2019-09-19, 19:00:00</p>
+        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/09/19/java-190919-builder-buffer/" title="StringBuffer、StringBuilder写入性能及线程安全总结">https://littlegrow.top/2019/09/19/java-190919-builder-buffer/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/09/19/java-190919-builder-buffer/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">
+                    我的工具库
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">
+                    钉钉机器人发送消息
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#StringBuffer、StringBuilder必要性"><span class="toc-number">1.</span> <span class="toc-text">StringBuffer、StringBuilder必要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编码测试写入性能及线程安全性"><span class="toc-number">2.</span> <span class="toc-text">编码测试写入性能及线程安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试结果分析"><span class="toc-number">3.</span> <span class="toc-text">测试结果分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#写入性能"><span class="toc-number">3.1.</span> <span class="toc-text">写入性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全"><span class="toc-number">3.2.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#稳定性"><span class="toc-number">3.3.</span> <span class="toc-text">稳定性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+
+
+    
+      <section id="comments" style="margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)">
+    <div id="vcomment" class="comment"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@1.1.9/dist/Valine.min.js"></script>
+    <script>
+		new Valine({
+			el: '#vcomment',
+			notify: 'true',
+			verify: 'false',
+			app_id: "RWJCM9UQW07DGPJGy2xvOQ7l-gzGzoHsz",
+			app_key: "EY1VbDQQchduEg09LGaC8uPq",
+			placeholder: "说点什么吧...",
+			avatar: "mp"
+		});
+		// 去除 power by valine
+	    var infoEle = document.querySelector('#comments .info');
+	    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+	      infoEle.childNodes.forEach(function(item) {
+	        item.parentNode.removeChild(item);
+	      });
+	    }
+    </script>
+</section>
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/" title="上一篇: 我的工具库">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/" title="下一篇: 钉钉机器人发送消息">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">我的工具库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">钉钉机器人发送消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/java-190918-hashmap/">JDK1.8 HashMap tableSizeFor()、hash() 方法梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">okio 简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">Java NIO 使用初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">CountDownLatch、Semaphore、CyclicBarrier</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/02/%E5%B9%B6%E5%8F%91-190830-java-lock/">JAVA锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">java实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/third-190828-okhttp/">OKHTTP简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/23/common-190823-threadpool/">JAVA线程池</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">生产者消费者模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/19/Android-20180819-start-activity/">Activity启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/16/mock-data-md/">一种快速 mock 数据的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/shell-190814-%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%91%BD%E4%BB%A4/">shell命令集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/08/server-190808-%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Virtualview-tools%E6%8F%90%E4%BE%9B%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%BC%96%E8%AF%91Tangram%E7%BB%84%E4%BB%B6/">如何在后端服务中集成virtualview_tools编译Tangram组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/Android-190805-RecyclerView%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86/">RecyclerView ViewHoler 缓存机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/server-190806-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/">后端服务快速接入二维码功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">Android Intent 传递数据限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">时间戳和日期字符串快速转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/Android-190726-MemCache/">客户端支持带过期时间的缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">排序算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/24/hello-world/">hexo简单使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2020 littlegrow  
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802010091">
+                    &nbsp;&nbsp;
+                    <img src="https://haitao.nos.netease.com/20190816112710_607bb2b9-eb68-46f7-a443-8f2dbbc2e20c.png" style="height:20px"/>
+                    浙公网安备 33010802010091号
+                </a>  
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

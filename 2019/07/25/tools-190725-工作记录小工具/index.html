@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="littlegrow" />
+
+
+
+<meta name="description" content="写工作周报时，完全想不起来做过什么，需要查看git提交记录或拎出需求清单方才回忆出，如果您存在类似困惑，本文兴许可以为您解惑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作记录小工具">
+<meta property="og:url" content="https://littlegrow.top/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/index.html">
+<meta property="og:site_name" content="刘雷刚的博客">
+<meta property="og:description" content="写工作周报时，完全想不起来做过什么，需要查看git提交记录或拎出需求清单方才回忆出，如果您存在类似困惑，本文兴许可以为您解惑。">
+<meta property="og:locale" content="ch">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190603172738_b034a4fa-b7a9-4837-8f76-2255c5c9a2cf.png">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190603190928_d43eed8a-1d99-4df0-b328-0169dafe11bb.png">
+<meta property="article:published_time" content="2019-07-25T09:28:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:13:30.914Z">
+<meta property="article:author" content="littlegrow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haitao.nos.netease.com/20190603172738_b034a4fa-b7a9-4837-8f76-2255c5c9a2cf.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="刘雷刚的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>工作记录小工具 | 刘雷刚的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">littlegrow</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                            <li><a href="/collect/">收藏</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/littlegrow">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">Yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">保持专注，做最好的自己</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">littlegrow</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">littlegrow</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                    <li><a href="/collect/">收藏</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-tools-190725-工作记录小工具" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="article-date">
+      <time datetime="2019-07-25T09:28:00.000Z" itemprop="datePublished">2019-07-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      工作记录小工具
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/Python/">Python</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="为什么有这个工具"><a href="#为什么有这个工具" class="headerlink" title="为什么有这个工具"></a>为什么有这个工具</h3><br>
+
+<p>写周报时，完全想不起来做过什么，需要查看提交记录或拎出需求清单方才回忆出，如果您存在类似困惑，本文兴许可以为您解惑。</p>
+<br>
+
+<h3 id="这是个什么工具"><a href="#这是个什么工具" class="headerlink" title="这是个什么工具"></a>这是个什么工具</h3><br>
+
+<p>讲述一款用于记录工作内容的小工具，随时增量存储工作记录，写周报时批量导出工作内容，再也不会忘记自己都做过什么了。</p>
+<br>
+
+<p>先体验一下：</p>
+<p><img src="https://haitao.nos.netease.com/20190603172738_b034a4fa-b7a9-4837-8f76-2255c5c9a2cf.png" alt="使用示例"></p>
+<p>可以轻松查看哪天做了什么事情，写周报不再发愁啦。</p>
+<br>
+
+<h3 id="这个工具怎么实现的"><a href="#这个工具怎么实现的" class="headerlink" title="这个工具怎么实现的"></a>这个工具怎么实现的</h3><br>
+
+<p>经分析，工具仅需包含信息存储、信息查询</p>
+<br>
+
+<h4 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h4><br>
+
+<p>使用Mysql来做数据存储</p>
+<br>
+
+<blockquote>
+<blockquote>
+<p>建表语句</p>
+</blockquote>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `timecost` (</span><br><span class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT <span class="string">'自动分配的id, 主键'</span>,</span><br><span class="line">  `user` varchar(100) NOT NULL COMMENT <span class="string">'用户'</span>,</span><br><span class="line">  `content` text NOT NULL COMMENT <span class="string">'内容'</span>,</span><br><span class="line">  `cost` int(11) NOT NULL COMMENT <span class="string">'耗时'</span>,</span><br><span class="line">  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT <span class="string">'创建时间'</span>,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `user` (`user`),</span><br><span class="line">  KEY `create_time` (`create_time`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT=<span class="string">'工作耗时统计'</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<p>脚本源码</p>
+</blockquote>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding=utf8</span></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">"utf8"</span>)</span><br><span class="line">import torndb</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置自己的数据库地址</span></span><br><span class="line">HOST = <span class="string">""</span></span><br><span class="line">DB_NAME = <span class="string">""</span></span><br><span class="line">DB_USER = <span class="string">""</span></span><br><span class="line">DB_PASSWORD = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">class TimeRecord(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.id = -1</span><br><span class="line">        self.user = <span class="string">""</span></span><br><span class="line">        self.content = <span class="string">""</span></span><br><span class="line">        self.cost = 0</span><br><span class="line">        self.create_time = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">        self.xuhao = 0</span><br><span class="line"></span><br><span class="line">    def setup(self, row):</span><br><span class="line">        self.id = row[<span class="string">"id"</span>]</span><br><span class="line">        self.user = row[<span class="string">"user"</span>]</span><br><span class="line">        self.content = row[<span class="string">"content"</span>]</span><br><span class="line">        self.cost = row[<span class="string">"cost"</span>]</span><br><span class="line">        self.create_time = row[<span class="string">"create_time"</span>]</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        <span class="built_in">return</span> <span class="string">"%(create_time)s %(index)s\t%(content)s\t%(cost)dh"</span> % &#123;</span><br><span class="line">            <span class="string">"create_time"</span>: self.create_time[:11].replace(<span class="string">"-"</span>, <span class="string">""</span>),</span><br><span class="line">            <span class="string">"index"</span>: <span class="string">"%d[id:%d]"</span> % (self.xuhao, self.id),</span><br><span class="line">            <span class="string">"content"</span>: self.content,</span><br><span class="line">            <span class="string">"cost"</span>: self.cost</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class DataHelper(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.db = torndb.Connection(HOST, DB_NAME, user=DB_USER, password=DB_PASSWORD)</span><br><span class="line"></span><br><span class="line">    def save_record(self, timeRecord):</span><br><span class="line">        sql = <span class="string">"INSERT INTO timecost (user,content,cost) VALUES (%s,%s,%s)"</span></span><br><span class="line">        self.db.insert(sql, timeRecord.user, timeRecord.content, timeRecord.cost)</span><br><span class="line"></span><br><span class="line">    def query_by_id_or_user(self, **kwargs):</span><br><span class="line">        sql = <span class="string">"SELECT * FROM timecost"</span></span><br><span class="line">        <span class="keyword">if</span> kwargs:</span><br><span class="line">            sql += <span class="string">" WHERE"</span></span><br><span class="line">            <span class="keyword">for</span> key <span class="keyword">in</span> kwargs.keys():</span><br><span class="line">                <span class="keyword">if</span> key == <span class="string">"id"</span>:</span><br><span class="line">                    sql += <span class="string">" id=%s and"</span> % kwargs[<span class="string">"id"</span>]</span><br><span class="line">                <span class="keyword">elif</span> key == <span class="string">"user"</span>:</span><br><span class="line">                    sql += <span class="string">" user='%s' and"</span> % kwargs[<span class="string">"user"</span>]</span><br><span class="line">            sql = sql[:len(sql) - 3]</span><br><span class="line">        <span class="keyword">if</span> sql.find(<span class="string">"id"</span>) &lt; 0:</span><br><span class="line">            sql += <span class="string">" order by id desc"</span></span><br><span class="line">        <span class="built_in">return</span> [self.__wrap_record(row) <span class="keyword">for</span> row <span class="keyword">in</span> self.db.query(sql)]</span><br><span class="line"></span><br><span class="line">    def query_week_data(self, last_week=0, user=None):</span><br><span class="line">        end = last_week * 7</span><br><span class="line">        start = end + 7</span><br><span class="line">        sql = <span class="string">"SELECT * FROM timecost where create_time&gt;'%s' and create_time&lt;='%s'"</span> % (</span><br><span class="line">            self.time_str(start), self.time_str(end))</span><br><span class="line">        <span class="keyword">if</span> user:</span><br><span class="line">            sql += <span class="string">" and user='%s'"</span> % user</span><br><span class="line">        sql += <span class="string">" order by id desc"</span></span><br><span class="line">        <span class="built_in">return</span> [self.__wrap_record(row) <span class="keyword">for</span> row <span class="keyword">in</span> self.db.query(sql)]</span><br><span class="line"></span><br><span class="line">    def delete_data(self, id):</span><br><span class="line">        sql = <span class="string">"DELETE FROM timecost where id=%s"</span> % id</span><br><span class="line">        self.db.execute(sql)</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def time_str(day_before=0):</span><br><span class="line">        <span class="built_in">return</span> (datetime.datetime.now() - datetime.timedelta(days=day_before, hours=8)).strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def time_str_add(date_time, hours=8):</span><br><span class="line">        <span class="built_in">return</span> (date_time + datetime.timedelta(hours=hours)).strftime(</span><br><span class="line">            <span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line"></span><br><span class="line">    def __wrap_record(self, row):</span><br><span class="line">        record = TimeRecord()</span><br><span class="line">        record.setup(row)</span><br><span class="line">        record.create_time = self.time_str_add(record.create_time)</span><br><span class="line">        <span class="built_in">return</span> record</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">useage = <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">    useage: cost save -u user -content content -cost cost</span></span><br><span class="line"><span class="string">            cost query -id id | -week week (-user user)?</span></span><br><span class="line"><span class="string">            cost delete -id id</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def value(sign, array):</span><br><span class="line">    index = -1</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(array)):</span><br><span class="line">        <span class="keyword">if</span> sign == array[i]:</span><br><span class="line">            index = i</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">    <span class="keyword">if</span> index &gt; 0 and index + 1 &lt; len(array):</span><br><span class="line">        <span class="built_in">return</span> array[index + 1]</span><br><span class="line">    <span class="built_in">return</span> <span class="string">""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    try:</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"save"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">            user = value(<span class="string">"-user"</span>, sys.argv)</span><br><span class="line">            content = value(<span class="string">"-content"</span>, sys.argv)</span><br><span class="line">            cost_str = value(<span class="string">"-cost"</span>, sys.argv)</span><br><span class="line">            cost = -1</span><br><span class="line">            <span class="keyword">if</span> cost_str.endswith(<span class="string">"d"</span>) or cost_str.endswith(<span class="string">"D"</span>):</span><br><span class="line">                cost = int(cost_str[:len(cost_str) - 1]) * 8</span><br><span class="line">            <span class="keyword">elif</span> cost_str.endswith(<span class="string">"h"</span>) or cost_str.endswith(<span class="string">"H"</span>):</span><br><span class="line">                cost = int(cost_str[:len(cost_str) - 1])</span><br><span class="line">            <span class="keyword">if</span> cost &lt; 0:</span><br><span class="line">                raise Exception(<span class="string">"耗时参数异常"</span>)</span><br><span class="line">            <span class="keyword">if</span> not user:</span><br><span class="line">                raise Exception(<span class="string">"用户参数异常"</span>)</span><br><span class="line">            <span class="keyword">if</span> not content:</span><br><span class="line">                raise Exception(<span class="string">"内容参数异常"</span>)</span><br><span class="line">            dataHelper = DataHelper()</span><br><span class="line">            record = TimeRecord()</span><br><span class="line">            record.user = user</span><br><span class="line">            record.content = content</span><br><span class="line">            record.cost = cost</span><br><span class="line">            dataHelper.save_record(record)</span><br><span class="line">            <span class="built_in">print</span> <span class="string">"保存成功"</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="string">"query"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">            dataHelper = DataHelper()</span><br><span class="line">            i = 1</span><br><span class="line">            <span class="keyword">if</span> <span class="string">"-id"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">                <span class="keyword">for</span> item <span class="keyword">in</span> dataHelper.query_by_id_or_user(id=int(value(<span class="string">"-id"</span>, sys.argv))):</span><br><span class="line">                    item.xuhao = i</span><br><span class="line">                    i += 1</span><br><span class="line">                    <span class="built_in">print</span> item</span><br><span class="line">            <span class="keyword">elif</span> <span class="string">"-week"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">                week = value(<span class="string">"-week"</span>, sys.argv)</span><br><span class="line">                <span class="keyword">if</span> not week or not week.isdigit():</span><br><span class="line">                    week = <span class="string">"0"</span></span><br><span class="line">                user = value(<span class="string">"-user"</span>, sys.argv)</span><br><span class="line">                <span class="keyword">for</span> item <span class="keyword">in</span> dataHelper.query_week_data(last_week=int(week), user=user):</span><br><span class="line">                    item.xuhao = i</span><br><span class="line">                    i += 1</span><br><span class="line">                    <span class="built_in">print</span> item</span><br><span class="line">            <span class="keyword">elif</span> <span class="string">"-user"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">                <span class="keyword">for</span> item <span class="keyword">in</span> dataHelper.query_by_id_or_user(user=value(<span class="string">"-user"</span>, sys.argv)):</span><br><span class="line">                    item.xuhao = i</span><br><span class="line">                    i += 1</span><br><span class="line">                    <span class="built_in">print</span> item</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                raise Exception(<span class="string">"查询参数异常"</span>)</span><br><span class="line">        <span class="keyword">elif</span> <span class="string">"delete"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">            <span class="keyword">if</span> <span class="string">"-id"</span> <span class="keyword">in</span> sys.argv:</span><br><span class="line">                dataHelper = DataHelper()</span><br><span class="line">                dataHelper.delete_data(id=int(value(<span class="string">"-id"</span>, sys.argv)))</span><br><span class="line">                <span class="built_in">print</span> <span class="string">"删除 %s 成功"</span> % value(<span class="string">"-id"</span>, sys.argv)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">"删除参数异常"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span> useage</span><br><span class="line">    except Exception, e:</span><br><span class="line">        <span class="built_in">print</span> str(e)</span><br><span class="line">        <span class="built_in">print</span> useage</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="生成可执行命令"><a href="#生成可执行命令" class="headerlink" title="生成可执行命令"></a>生成可执行命令</h4><br>
+
+<p><code>Python</code> 脚本可使用 <code>pyinstaller</code> 模块很方便的打包成可执行文件(使用方法参看<a href="http://www.pyinstaller.org/" target="_blank" rel="noopener">pyinstaller官网</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -F [脚本文件名].py</span><br></pre></td></tr></table></figure>
+
+<p>如果您的终端使用的是 <code>zsh</code> ，可分别对增删查操作设置别名，参考我的做法：</p>
+<p><img src="https://haitao.nos.netease.com/20190603190928_d43eed8a-1d99-4df0-b328-0169dafe11bb.png" alt></p>
+<br>
+
+<h3 id="达到了什么效果"><a href="#达到了什么效果" class="headerlink" title="达到了什么效果"></a>达到了什么效果</h3><br>
+拥有这个小工具后再也不担心写周报时忘记做过什么，请尽情玩耍吧！
+
+<p>本文章仅做参考，如感兴趣，可使用上面源码自行配置使用。</p>
+<p><br><br><br><br><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
+        <p><span>发布时间:</span>2019-07-25, 17:28:00</p>
+        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/" title="工作记录小工具">https://littlegrow.top/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">
+                    排序算法小结
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/07/24/hello-world/">
+                    hexo简单使用
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么有这个工具"><span class="toc-number">1.</span> <span class="toc-text">为什么有这个工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这是个什么工具"><span class="toc-number">2.</span> <span class="toc-text">这是个什么工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这个工具怎么实现的"><span class="toc-number">3.</span> <span class="toc-text">这个工具怎么实现的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#编写脚本"><span class="toc-number">3.1.</span> <span class="toc-text">编写脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生成可执行命令"><span class="toc-number">3.2.</span> <span class="toc-text">生成可执行命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#达到了什么效果"><span class="toc-number">4.</span> <span class="toc-text">达到了什么效果</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+
+
+    
+      <section id="comments" style="margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)">
+    <div id="vcomment" class="comment"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@1.1.9/dist/Valine.min.js"></script>
+    <script>
+		new Valine({
+			el: '#vcomment',
+			notify: 'true',
+			verify: 'false',
+			app_id: "RWJCM9UQW07DGPJGy2xvOQ7l-gzGzoHsz",
+			app_key: "EY1VbDQQchduEg09LGaC8uPq",
+			placeholder: "说点什么吧...",
+			avatar: "mp"
+		});
+		// 去除 power by valine
+	    var infoEle = document.querySelector('#comments .info');
+	    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+	      infoEle.childNodes.forEach(function(item) {
+	        item.parentNode.removeChild(item);
+	      });
+	    }
+    </script>
+</section>
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/" title="上一篇: 排序算法小结">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/07/24/hello-world/" title="下一篇: hexo简单使用">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">我的工具库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">钉钉机器人发送消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/java-190918-hashmap/">JDK1.8 HashMap tableSizeFor()、hash() 方法梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">okio 简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">Java NIO 使用初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">CountDownLatch、Semaphore、CyclicBarrier</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/02/%E5%B9%B6%E5%8F%91-190830-java-lock/">JAVA锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">java实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/third-190828-okhttp/">OKHTTP简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/23/common-190823-threadpool/">JAVA线程池</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">生产者消费者模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/19/Android-20180819-start-activity/">Activity启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/16/mock-data-md/">一种快速 mock 数据的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/shell-190814-%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%91%BD%E4%BB%A4/">shell命令集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/08/server-190808-%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Virtualview-tools%E6%8F%90%E4%BE%9B%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%BC%96%E8%AF%91Tangram%E7%BB%84%E4%BB%B6/">如何在后端服务中集成virtualview_tools编译Tangram组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/Android-190805-RecyclerView%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86/">RecyclerView ViewHoler 缓存机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/server-190806-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/">后端服务快速接入二维码功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">Android Intent 传递数据限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">时间戳和日期字符串快速转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/Android-190726-MemCache/">客户端支持带过期时间的缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">排序算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/24/hello-world/">hexo简单使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2020 littlegrow  
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802010091">
+                    &nbsp;&nbsp;
+                    <img src="https://haitao.nos.netease.com/20190816112710_607bb2b9-eb68-46f7-a443-8f2dbbc2e20c.png" style="height:20px"/>
+                    浙公网安备 33010802010091号
+                </a>  
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

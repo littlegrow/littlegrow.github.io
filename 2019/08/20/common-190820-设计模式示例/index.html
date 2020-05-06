@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="littlegrow" />
+
+
+
+<meta name="description" content="设计模式长时间不用总会忘记，写些小例子加深印象，查看时快速回忆起">
+<meta property="og:type" content="article">
+<meta property="og:title" content="23种设计模式示例">
+<meta property="og:url" content="https://littlegrow.top/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/index.html">
+<meta property="og:site_name" content="刘雷刚的博客">
+<meta property="og:description" content="设计模式长时间不用总会忘记，写些小例子加深印象，查看时快速回忆起">
+<meta property="og:locale" content="ch">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190821141326_129ed993-10b7-421f-aa94-bb3e771ea9c3.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190821141655_5ba3473c-96c4-47b8-ad71-ba83241a4329.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190821141010_524f6821-1d0b-4b9d-9de1-cb8b7b97adbb.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190821143349_de7eeda3-bc84-47a0-ae11-135ae35cbdda.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190821144548_45c13061-b7dd-441e-b02d-bd1740cb4ed2.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190822134637_f5e2c351-1baf-4b35-8ded-0020e5fd2f6c.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190822140313_c45c3d38-98fe-463b-8664-45ada48a423b.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190822195657_3dcc762c-ef9d-4ee2-956a-0889a848142e.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190822204402_f0d5fca2-e23a-4cf3-a8d2-bf0c1c7022e1.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190822210619_a197d702-0d95-4797-97b8-d94a63c3f64c.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823095116_3b3e4182-0410-414b-8cd9-05e444f88030.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823101525_31ec9824-194d-4c00-9891-025b85d45b13.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823103345_927af8ba-fda5-40df-a6bc-65e031d52688.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823105632_123e6918-1751-4b99-96b7-7172628c6386.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823142814_95d826f1-02a0-4761-9381-03b52bc21aeb.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823114650_256d7b03-188d-4b8b-b549-38572d42162b.jpg">
+<meta property="og:image" content="https://haitao.nos.netease.com/20190823140322_0df37ba9-4ad2-4b91-9c17-fa20c2c29729.jpg">
+<meta property="article:published_time" content="2019-08-20T13:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-06T01:13:30.912Z">
+<meta property="article:author" content="littlegrow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haitao.nos.netease.com/20190821141326_129ed993-10b7-421f-aa94-bb3e771ea9c3.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="刘雷刚的博客" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>23种设计模式示例 | 刘雷刚的博客</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">littlegrow</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">文章</a></li>
+                        
+                            <li><a href="/tags/">标签</a></li>
+                        
+                            <li><a href="/collect/">收藏</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/littlegrow">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.coding.me/yelee/">Yelee</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">保持专注，做最好的自己</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">littlegrow</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">littlegrow</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                    <li><a href="/collect/">收藏</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:997909463@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-common-190820-设计模式示例" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/" class="article-date">
+      <time datetime="2019-08-20T13:00:00.000Z" itemprop="datePublished">2019-08-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      23种设计模式示例
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="23种设计模式"><a href="#23种设计模式" class="headerlink" title="23种设计模式"></a>23种设计模式</h3><br>
+
+<p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。</p>
+<p>总体来说设计模式分为三大类：</p>
+<pre><code>创建型模式，共五种：单例模式、工厂方法模式、抽象工厂模式、建造者模式、原型模式
+结构型模式，共七种：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式
+行为型模式，共十一种：策略模式、模板方法模式、观察者模式、迭代器模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式</code></pre><br>
+
+<h3 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h3><br>
+
+<p>对象实例化的模式，创建型模式用于解耦对象的实例化过程.</p>
+<br>
+
+<h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><br>
+
+<p>一个类仅有一个实例，提供一个全局访问点。</p>
+<br>
+
+<h5 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h5><br>
+
+<p>类加载时就创建实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class HungrySingle &#123;</span><br><span class="line">    private static HungrySingle INSTANCE &#x3D; new HungrySingle();</span><br><span class="line"></span><br><span class="line">    private HungrySingle() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static HungrySingle getInstance() &#123;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h5><br>
+
+<p>访问时创建类的实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingle &#123;</span><br><span class="line">    private static LazySingle INSTANCE &#x3D; null;</span><br><span class="line"></span><br><span class="line">    private LazySingle() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static LazySingle getInstance() &#123;</span><br><span class="line">        if (INSTANCE &#x3D;&#x3D; null) &#123;</span><br><span class="line">            INSTANCE &#x3D; new LazySingle();</span><br><span class="line">        &#125;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="red">注：在多线程环境下可能实例不止一个，可能出现线程安全问题</font></p>
+<br>
+
+<h5 id="双重校验锁"><a href="#双重校验锁" class="headerlink" title="双重校验锁"></a>双重校验锁</h5><br>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class DoubleCheckSingle &#123;</span><br><span class="line">    private static volatile DoubleCheckSingle INSTANCE &#x3D; null;</span><br><span class="line"></span><br><span class="line">    private DoubleCheckSingle() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static DoubleCheckSingle getInstance() &#123;</span><br><span class="line">        if (INSTANCE &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (DoubleCheckSingle.class) &#123;</span><br><span class="line">                if (INSTANCE &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    INSTANCE &#x3D; new DoubleCheckSingle();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h5 id="枚举单例"><a href="#枚举单例" class="headerlink" title="枚举单例"></a>枚举单例</h5><br>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public enum EnumSingle &#123;</span><br><span class="line">    INSTANCE</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h4><br>
+
+<p><img src="https://haitao.nos.netease.com/20190821141326_129ed993-10b7-421f-aa94-bb3e771ea9c3.jpg" alt></p>
+<p>定义产品接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface Product &#123;</span><br><span class="line">    String getProductName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义产品A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class ProductA implements Product &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getProductName() &#123;</span><br><span class="line">        return ProductA.class.getSimpleName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义产品B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class ProductB implements Product &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getProductName() &#123;</span><br><span class="line">        return ProductB.class.getSimpleName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义工厂接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface Factory &#123;</span><br><span class="line">    Product getProduct();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A工厂生产产品A</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class FactoryA implements Factory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Product getProduct() &#123;</span><br><span class="line">        return new ProductA();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>B工厂生产产品B</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class FactoryB implements Factory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Product getProduct() &#123;</span><br><span class="line">        return new ProductB();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h4><br>
+
+<p>围绕一个超级工厂创建其他工厂。</p>
+<p><img src="https://haitao.nos.netease.com/20190821141655_5ba3473c-96c4-47b8-ad71-ba83241a4329.jpg" alt="抽象工厂"></p>
+<p>定义形状类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">public interface Shape &#123;</span><br><span class="line">    int SHAPE_RECTANGLE &#x3D; 1;</span><br><span class="line">    int SHAPE_SQUARE &#x3D; 2;</span><br><span class="line">    int SHAPE_CIRCLE &#x3D; 3;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 形状</span><br><span class="line">     *&#x2F;</span><br><span class="line">    int getShapeType();</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 面积</span><br><span class="line">     *&#x2F;</span><br><span class="line">    float getArea();</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 周长</span><br><span class="line">     *&#x2F;</span><br><span class="line">    float getPerimeter();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 矩形</span><br><span class="line">public class RectangleShape implements Shape &#123;</span><br><span class="line">    private float width;</span><br><span class="line">    private float height;</span><br><span class="line"></span><br><span class="line">    public RectangleShape(float width, float height) &#123;</span><br><span class="line">        this.width &#x3D; width;</span><br><span class="line">        this.height &#x3D; height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getShapeType() &#123;</span><br><span class="line">        return SHAPE_RECTANGLE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getArea() &#123;</span><br><span class="line">        return width * height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getPerimeter() &#123;</span><br><span class="line">        return (width + height) * 2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 正方形</span><br><span class="line">public class SquareShape implements Shape &#123;</span><br><span class="line">    private float length;</span><br><span class="line"></span><br><span class="line">    public SquareShape(float length) &#123;</span><br><span class="line">        this.length &#x3D; length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getShapeType() &#123;</span><br><span class="line">        return SHAPE_SQUARE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getArea() &#123;</span><br><span class="line">        return length * length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getPerimeter() &#123;</span><br><span class="line">        return length * 4;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 圆形</span><br><span class="line">public class CircleShape implements Shape &#123;</span><br><span class="line">    private float radius;</span><br><span class="line"></span><br><span class="line">    public CircleShape(float radius) &#123;</span><br><span class="line">        this.radius &#x3D; radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getShapeType() &#123;</span><br><span class="line">        return SHAPE_SQUARE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getArea() &#123;</span><br><span class="line">        return (float) Math.PI * radius * radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float getPerimeter() &#123;</span><br><span class="line">        return (float) Math.PI * 2 * radius;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义颜色类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public interface Color &#123;</span><br><span class="line">    String COLOR_RED &#x3D; &quot;red&quot;;</span><br><span class="line">    String COLOR_BLACK &#x3D; &quot;black&quot;;</span><br><span class="line">    String COLOR_WHITE &#x3D; &quot;white&quot;;</span><br><span class="line"></span><br><span class="line">    String getColorType();</span><br><span class="line"></span><br><span class="line">    int getColor();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 红色</span><br><span class="line">public class Red implements Color &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getColorType() &#123;</span><br><span class="line">        return COLOR_RED;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getColor() &#123;</span><br><span class="line">        return 0xff0000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 黑色</span><br><span class="line">public class Black implements Color &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getColorType() &#123;</span><br><span class="line">        return COLOR_BLACK;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getColor() &#123;</span><br><span class="line">        return 0x000000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 白色</span><br><span class="line">public class White implements Color &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String getColorType() &#123;</span><br><span class="line">        return COLOR_WHITE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getColor() &#123;</span><br><span class="line">        return 0xffffff;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>抽象出工厂接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface AbstractFactory &#123;</span><br><span class="line">    &#x2F;&#x2F; 获取形状</span><br><span class="line">    Shape getShape(int shapeType, float... args);</span><br><span class="line">    &#x2F;&#x2F; 获取颜色</span><br><span class="line">    Color getColor(String colorType);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>形状工厂实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class ShapeFactory implements AbstractFactory &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Shape getShape(int shapeType, float... args) &#123;</span><br><span class="line">        if (shapeType &#x3D;&#x3D; Shape.SHAPE_RECTANGLE) &#123;</span><br><span class="line">            float width &#x3D; 0, height &#x3D; 0;</span><br><span class="line">            if (args !&#x3D; null &amp;&amp; args.length &#x3D;&#x3D; 2) &#123;</span><br><span class="line">                width &#x3D; args[0];</span><br><span class="line">                height &#x3D; args[1];</span><br><span class="line">            &#125;</span><br><span class="line">            return new RectangleShape(width, height);</span><br><span class="line">        &#125; else if (shapeType &#x3D;&#x3D; Shape.SHAPE_SQUARE) &#123;</span><br><span class="line">            float length &#x3D; 0;</span><br><span class="line">            if (args !&#x3D; null &amp;&amp; args.length &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                length &#x3D; args[0];</span><br><span class="line">            &#125;</span><br><span class="line">            return new SquareShape(length);</span><br><span class="line">        &#125; else if (shapeType &#x3D;&#x3D; Shape.SHAPE_CIRCLE) &#123;</span><br><span class="line">            float radius &#x3D; 0;</span><br><span class="line">            if (args !&#x3D; null &amp;&amp; args.length &#x3D;&#x3D; 1) &#123;</span><br><span class="line">                radius &#x3D; args[0];</span><br><span class="line">            &#125;</span><br><span class="line">            return new CircleShape(radius);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Color getColor(String colorType) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>颜色工厂实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class ColorFactory implements AbstractFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Shape getShape(int shapeType, float... args) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Color getColor(String colorType) &#123;</span><br><span class="line">        if (Color.COLOR_RED.equals(colorType)) &#123;</span><br><span class="line">            return new Red();</span><br><span class="line">        &#125; else if (Color.COLOR_BLACK.equals(colorType)) &#123;</span><br><span class="line">            return new Black();</span><br><span class="line">        &#125; else if (Color.COLOR_WHITE.equals(colorType)) &#123;</span><br><span class="line">            return new White();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过工厂生成器来创建其他工厂</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class FactoryProducer &#123;</span><br><span class="line">    public static final String FACTORY_SHAPE &#x3D; &quot;shape_factory&quot;;</span><br><span class="line">    public static final String FACTORY_COLOR &#x3D; &quot;color_factory&quot;;</span><br><span class="line"></span><br><span class="line">    public static AbstractFactory getFactory(String factoryType) &#123;</span><br><span class="line">        if (FACTORY_SHAPE.equals(factoryType)) &#123;</span><br><span class="line">            return new ShapeFactory();</span><br><span class="line">        &#125; else if (FACTORY_COLOR.equals(factoryType)) &#123;</span><br><span class="line">            return new ColorFactory();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h4><br>
+
+<p>在不知道对象的建造过程和细节的情况下就可以直接创建复杂的对象，将部件和其组装过程分开，一步一步创建一个复杂的对象。</p>
+<p>用于构造复杂对象，或者多个参数传递且有默认值的情况。</p>
+<p>例如 Retrofit 和 OKHTTP 实例的创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> val client &#x3D; OkHttpClient.Builder().connectTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)</span><br><span class="line">                .writeTimeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)</span><br><span class="line">                .readTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS)</span><br><span class="line">                .retryOnConnectionFailure(true)</span><br><span class="line">                .addInterceptor(logging)</span><br><span class="line">                .build()</span><br><span class="line"></span><br><span class="line">mRetrofit &#x3D; Retrofit.Builder().client(client)</span><br><span class="line">        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">        .baseUrl(baseUrl)</span><br><span class="line">        .build()</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/square/okhttp/blob/master/okhttp/src/main/java/okhttp3/OkHttpClient.kt" target="_blank" rel="noopener">OkHttpClient.java源码</a></p>
+<p><a href="https://github.com/square/retrofit/blob/master/retrofit/src/main/java/retrofit2/Retrofit.java" target="_blank" rel="noopener">Retrofit.java源码</a></p>
+<br>
+
+<h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><br>
+
+<p>用于创建重复的对象，同时又能保证性能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class Shape implements Cloneable &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected Shape clone() &#123;</span><br><span class="line">        Shape clone &#x3D; null;</span><br><span class="line">        try &#123;</span><br><span class="line">            clone &#x3D; (Shape) super.clone();</span><br><span class="line">        &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h3><br>
+
+<p>把类或对象结合在一起形成一个更大的结构.</p>
+<br>
+
+<h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><br>
+
+<p>将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作.</p>
+<p><img src="https://haitao.nos.netease.com/20190821141010_524f6821-1d0b-4b9d-9de1-cb8b7b97adbb.jpg" alt="适配器模式类图"></p>
+<p>假设引入的第三方模块的实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class ThirdProduct &#123;</span><br><span class="line"></span><br><span class="line">    public Object dealSomething(Object... args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 三方模块处理</span><br><span class="line">        &#x2F;&#x2F; ......</span><br><span class="line">        return new Object();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们业务所需要的接口为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IAdapter &#123;</span><br><span class="line">    Object dealMine(String... args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可构建如下是配置器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class MyProductAdapter implements IAdapter &#123;</span><br><span class="line">    private ThirdProduct thirdProduct &#x3D; new ThirdProduct();</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object dealMine(String... args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 前置处理</span><br><span class="line">        Object result &#x3D; thirdProduct.dealSomething(args);</span><br><span class="line">        &#x2F;&#x2F; 后置处理</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h4><br>
+
+<p>向一个现有的对象添加新的功能，同时又不改变其结构。</p>
+<p><img src="https://haitao.nos.netease.com/20190821143349_de7eeda3-bc84-47a0-ae11-135ae35cbdda.jpg" alt></p>
+<p>例：给图形添加红色边框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public interface Shape &#123;</span><br><span class="line">    void draw();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class CircleShape implements Shape &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        System.out.println(&quot;circle draw&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class ShapeDecorator &#123;</span><br><span class="line">    protected Shape shape;</span><br><span class="line"></span><br><span class="line">    public ShapeDecorator(Shape shape) &#123;</span><br><span class="line">        this.shape &#x3D; shape;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        shape.draw();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RedShapeDecorator extends ShapeDecorator &#123;</span><br><span class="line">    private Color color;</span><br><span class="line"></span><br><span class="line">    public RedShapeDecorator(Shape shape) &#123;</span><br><span class="line">        super(shape);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        setBorderColor(Color.RED);</span><br><span class="line">        super.draw();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void setBorderColor(Color red) &#123;</span><br><span class="line">        color &#x3D; red;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><br>
+
+<p>一个类代理另一个类的功能。</p>
+<p><img src="https://haitao.nos.netease.com/20190821144548_45c13061-b7dd-441e-b02d-bd1740cb4ed2.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public interface IProxy &#123;</span><br><span class="line">    void deal(Object... args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RealObj implements IProxy &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void deal(Object... args) &#123;</span><br><span class="line">        System.out.println(&quot;我是处理类&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ProxyObj implements IProxy &#123;</span><br><span class="line">    private RealObj realObj;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void deal(Object... args) &#123;</span><br><span class="line">        if (realObj &#x3D;&#x3D; null) &#123;</span><br><span class="line">            realObj &#x3D; new RealObj();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;我是代理类，现在要调用具体类处理数据&quot;);</span><br><span class="line">        realObj.deal(args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h4 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h4><br>
+
+<p>提供了一个访问系统的接口，隐藏系统的复杂性。</p>
+<p><img src="https://haitao.nos.netease.com/20190822134637_f5e2c351-1baf-4b35-8ded-0020e5fd2f6c.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public interface IShape &#123;</span><br><span class="line">    void draw();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Circle implements IShape &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        System.out.println(&quot;draw circle shape.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Square implements IShape &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        System.out.println(&quot;draw square shape.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ShapeMaker &#123;</span><br><span class="line">    private IShape circle &#x3D; new Circle();</span><br><span class="line">    private IShape square &#x3D; new Square();</span><br><span class="line"></span><br><span class="line">    public void drawCircle() &#123;</span><br><span class="line">        circle.draw();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void drawSquare() &#123;</span><br><span class="line">        square.draw();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：通过 ShapeMaker 提供一个访问图形绘制的入口，对外部隐藏图形的构造过程。</p>
+<br>
+
+<h4 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h4><br>
+
+<p>把抽象与实现解耦，使得二者可以独立变化。</p>
+<p><img src="https://haitao.nos.netease.com/20190822140313_c45c3d38-98fe-463b-8664-45ada48a423b.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public interface DrawAPI &#123;</span><br><span class="line">    void drawCircle(float x, float y, float radius);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DrawBlueCircle implements DrawAPI &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void drawCircle(float x, float y, float radius) &#123;</span><br><span class="line">        System.out.println(&quot;draw blue circle&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class DrawRedCircle implements DrawAPI &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void drawCircle(float x, float y, float radius) &#123;</span><br><span class="line">        System.out.println(&quot;draw red circle&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class Shape &#123;</span><br><span class="line">    protected DrawAPI mDrawAPI;</span><br><span class="line"></span><br><span class="line">    public Shape(DrawAPI mDrawAPI) &#123;</span><br><span class="line">        this.mDrawAPI &#x3D; mDrawAPI;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public abstract void draw();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Circle extends Shape &#123;</span><br><span class="line">    private float x;</span><br><span class="line">    private float y;</span><br><span class="line">    private float radius;</span><br><span class="line"></span><br><span class="line">    public Circle(float x, float y, float radius, DrawAPI mDrawAPI) &#123;</span><br><span class="line">        super(mDrawAPI);</span><br><span class="line">        this.x &#x3D; x;</span><br><span class="line">        this.y &#x3D; y;</span><br><span class="line">        this.radius &#x3D; radius;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void draw() &#123;</span><br><span class="line">        mDrawAPI.drawCircle(x, y, radius);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：将圆的绘制方法抽象与具体绘制逻辑分离</p>
+<br>
+
+<h4 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h4><br>
+
+<p>部分整体模式，是用于把一组相似的对象当作一个单一的对象。</p>
+<p>创建 Employee 类，该类带有 Employee 对象的列表:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class Employee &#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private String dept;</span><br><span class="line">    private int salary;</span><br><span class="line">    private List&lt;Employee&gt; subordinates;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;构造函数</span><br><span class="line">    public Employee(String name, String dept, int sal) &#123;</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">        this.dept &#x3D; dept;</span><br><span class="line">        this.salary &#x3D; sal;</span><br><span class="line">        subordinates &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void add(Employee e) &#123;</span><br><span class="line">        subordinates.add(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void remove(Employee e) &#123;</span><br><span class="line">        subordinates.remove(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;Employee&gt; getSubordinates() &#123;</span><br><span class="line">        return subordinates;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return (&quot;Employee :[ Name : &quot; + name</span><br><span class="line">                + &quot;, dept : &quot; + dept + &quot;, salary :&quot;</span><br><span class="line">                + salary + &quot; ]&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>使用 Employee 类来创建和打印员工的层次结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class CompositePatternDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Employee CEO &#x3D; new Employee(&quot;John&quot;, &quot;CEO&quot;, 30000);</span><br><span class="line"></span><br><span class="line">        Employee headSales &#x3D; new Employee(&quot;Robert&quot;, &quot;Head Sales&quot;, 20000);</span><br><span class="line"></span><br><span class="line">        Employee headMarketing &#x3D; new Employee(&quot;Michel&quot;, &quot;Head Marketing&quot;, 20000);</span><br><span class="line"></span><br><span class="line">        Employee clerk1 &#x3D; new Employee(&quot;Laura&quot;, &quot;Marketing&quot;, 10000);</span><br><span class="line">        Employee clerk2 &#x3D; new Employee(&quot;Bob&quot;, &quot;Marketing&quot;, 10000);</span><br><span class="line"></span><br><span class="line">        Employee salesExecutive1 &#x3D; new Employee(&quot;Richard&quot;, &quot;Sales&quot;, 10000);</span><br><span class="line">        Employee salesExecutive2 &#x3D; new Employee(&quot;Rob&quot;, &quot;Sales&quot;, 10000);</span><br><span class="line"></span><br><span class="line">        CEO.add(headSales);</span><br><span class="line">        CEO.add(headMarketing);</span><br><span class="line"></span><br><span class="line">        headSales.add(salesExecutive1);</span><br><span class="line">        headSales.add(salesExecutive2);</span><br><span class="line"></span><br><span class="line">        headMarketing.add(clerk1);</span><br><span class="line">        headMarketing.add(clerk2);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;打印该组织的所有员工</span><br><span class="line">        List&lt;Employee&gt; employees &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        employees.add(CEO);</span><br><span class="line">        while (!employees.isEmpty()) &#123;</span><br><span class="line">            Employee employee &#x3D; employees.remove(0);</span><br><span class="line">            System.out.println(employee);</span><br><span class="line">            employees.addAll(employee.getSubordinates());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：代码参考<a href="https://www.runoob.com/design-pattern/composite-pattern.html" target="_blank" rel="noopener">composite-pattern</a>，打印位置改为层序遍历。</p>
+<br>
+
+<h4 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h4><p>用于减少创建对象的数量，以减少内存占用和提高性能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class KlDeviceUdIDUtils &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 缓存更新区间实例，防止频繁创建</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private static Map&lt;String, SoftReference&lt;UdIDRange&gt;&gt; cachedRange &#x3D; new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 判断是否在灰度区间内</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public static boolean isInRange(int versionCode, int radio, String udid) &#123;</span><br><span class="line">        if (radio &gt;&#x3D; 100) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125; else if (radio &lt;&#x3D; 0) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if (TextUtils.isEmpty(udid) || udid.length() &lt; 2) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        UdIDRange udIDRange &#x3D; getRange(versionCode, radio &#x2F; 100f);</span><br><span class="line">        return udIDRange.isInRange(udid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static UdIDRange getRange(int version, float ratio) &#123;</span><br><span class="line">        UdIDRange udIDRange &#x3D; null;</span><br><span class="line">        String key &#x3D; version + &quot;_&quot; + ratio;</span><br><span class="line">        try &#123;</span><br><span class="line">            udIDRange &#x3D; cachedRange.get(key).get();</span><br><span class="line">        &#125; catch (Exception ignored) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        if (udIDRange &#x3D;&#x3D; null) &#123;</span><br><span class="line"></span><br><span class="line">            ......</span><br><span class="line"></span><br><span class="line">            udIDRange &#x3D; new UdIDRange(offset, start, end, isReverseRange, ratio);</span><br><span class="line">            cachedRange.put(key, new SoftReference&lt;&gt;(udIDRange));</span><br><span class="line">        &#125;</span><br><span class="line">        return udIDRange;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static class UdIDRange &#123;</span><br><span class="line"></span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：此代码片段为实际项目中的使用方式，增加缓存以减少实例创建次数，提高运行效率</p>
+<br>
+
+<h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h3><p>类和对象如何交互，划分责任和算法.</p>
+<br>
+
+<h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><p>一个类的行为或其算法可以在运行时更改。</p>
+<p><img src="https://haitao.nos.netease.com/20190822195657_3dcc762c-ef9d-4ee2-956a-0889a848142e.jpg" alt></p>
+<p>可以在运行时设置不同的 <code>strategy</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public interface Strategy &#123;</span><br><span class="line">    float operator(float a, float b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class AddStrategy implements Strategy &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public float operator(float a, float b) &#123;</span><br><span class="line">        return a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class MultiplyStrategy implements Strategy &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public float operator(float a, float b) &#123;</span><br><span class="line">        return a * b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class SubstractStrategy implements Strategy &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public float operator(float a, float b) &#123;</span><br><span class="line">        return a - b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Context implements Strategy &#123;</span><br><span class="line">    private Strategy strategy;</span><br><span class="line"></span><br><span class="line">    public void setStrategy(Strategy strategy) &#123;</span><br><span class="line">        this.strategy &#x3D; strategy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public float operator(float a, float b) &#123;</span><br><span class="line">        if (strategy &#x3D;&#x3D; null) &#123;</span><br><span class="line">            throw new RuntimeException(&quot;no strategy set&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return strategy.operator(a, b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="模版方法模式"><a href="#模版方法模式" class="headerlink" title="模版方法模式"></a>模版方法模式</h4><br>
+
+<p>一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Template &#123;</span><br><span class="line">    public Template() &#123;</span><br><span class="line">        onCreate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        initView();</span><br><span class="line">        initData();</span><br><span class="line">        initListener();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected abstract void initView();</span><br><span class="line"></span><br><span class="line">    protected abstract void initData();</span><br><span class="line"></span><br><span class="line">    protected abstract void initListener();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><p>当一个对象被修改时，则会自动通知它的依赖对象。</p>
+<p><img src="https://haitao.nos.netease.com/20190822204402_f0d5fca2-e23a-4cf3-a8d2-bf0c1c7022e1.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public interface IObserver &#123;</span><br><span class="line">    void update();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Subject &#123;</span><br><span class="line">    private int state;</span><br><span class="line"></span><br><span class="line">    public int getState() &#123;</span><br><span class="line">        return state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setState(int state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">        System.out.println(&quot;subject change&quot;);</span><br><span class="line">        notifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private List&lt;IObserver&gt; observers &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addObserver(IObserver observer) &#123;</span><br><span class="line">        System.out.println(&quot;add observer: &quot; + observer.getClass().getSimpleName());</span><br><span class="line">        observers.add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean removeObserver(IObserver observer) &#123;</span><br><span class="line">        return observers.remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void notifyObservers() &#123;</span><br><span class="line">        if (!observers.isEmpty()) &#123;</span><br><span class="line">            for (IObserver observer : observers) &#123;</span><br><span class="line">                observer.update();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(&quot;no observer&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class AObserver implements IObserver &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void update() &#123;</span><br><span class="line">        System.out.println(&quot;A observer update&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BObserver implements IObserver &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void update() &#123;</span><br><span class="line">        System.out.println(&quot;B observer update&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Subject subject &#x3D; new Subject();</span><br><span class="line">        subject.setState(0);</span><br><span class="line">        subject.addObserver(new AObserver());</span><br><span class="line">        subject.addObserver(new BObserver());</span><br><span class="line">        subject.setState(1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">subject change</span><br><span class="line">no observer</span><br><span class="line">add observer: AObserver</span><br><span class="line">add observer: BObserver</span><br><span class="line">subject change</span><br><span class="line">A observer update</span><br><span class="line">B observer update</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><br>
+
+<p>用于顺序访问集合对象的元素，不需要知道集合对象的底层表示。</p>
+<p><img src="https://haitao.nos.netease.com/20190822210619_a197d702-0d95-4797-97b8-d94a63c3f64c.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator&lt;T&gt; &#123;</span><br><span class="line">    T next();</span><br><span class="line"></span><br><span class="line">    boolean hasNext();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class IntegerIterator implements Iterator&lt;Integer&gt; &#123;</span><br><span class="line">    private int[] array;</span><br><span class="line">    private int index;</span><br><span class="line"></span><br><span class="line">    IntegerIterator(int[] array) &#123;</span><br><span class="line">        this.array &#x3D; array;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Integer next() &#123;</span><br><span class="line">        return array[index++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean hasNext() &#123;</span><br><span class="line">        return index &lt; array.length;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Array &#123;</span><br><span class="line">    private int[] array &#x3D; new int[10];</span><br><span class="line"></span><br><span class="line">    public Iterator getIterator() &#123;</span><br><span class="line">        return new IntegerIterator(array);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h4><br>
+
+<p>避免请求发送者与接收者耦合在一起，让多个对象都有可能接收请求，将这些对象连接成一条链，并且沿着这条链传递请求。</p>
+<p><img src="https://haitao.nos.netease.com/20190823095116_3b3e4182-0410-414b-8cd9-05e444f88030.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public abstract class Filter &#123;</span><br><span class="line">    private Filter nextFilter;</span><br><span class="line"></span><br><span class="line">    public Filter setNextFilter(Filter nextFilter) &#123;</span><br><span class="line">        this.nextFilter &#x3D; nextFilter;</span><br><span class="line">        return nextFilter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String filter(String content) &#123;</span><br><span class="line">        content &#x3D; doOperator(content);</span><br><span class="line">        if (nextFilter !&#x3D; null) &#123;</span><br><span class="line">            return nextFilter.filter(content);</span><br><span class="line">        &#125;</span><br><span class="line">        return content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected abstract String doOperator(String content);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RemoveBlankFilter extends Filter &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected String doOperator(String content) &#123;</span><br><span class="line">        System.out.println(&quot;Before RemoveBlankFilter: &quot; + content);</span><br><span class="line">        content &#x3D; content.replace(&quot; &quot;, &quot;&quot;);</span><br><span class="line">        System.out.println(&quot;After RemoveBlankFilter: &quot; + content);</span><br><span class="line">        return content;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RemoveBottomLineFilter extends Filter &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected String doOperator(String content) &#123;</span><br><span class="line">        System.out.println(&quot;Before RemoveBottomLineFilter: &quot; + content);</span><br><span class="line">        content &#x3D; content.replace(&quot;_&quot;, &quot;&quot;);</span><br><span class="line">        System.out.println(&quot;After RemoveBottomLineFilter: &quot; + content);</span><br><span class="line">        return content;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ToUppFilter extends Filter &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected String doOperator(String content) &#123;</span><br><span class="line">        System.out.println(&quot;Before ToUppFilter: &quot; + content);</span><br><span class="line">        content &#x3D; content.toUpperCase();</span><br><span class="line">        System.out.println(&quot;After ToUppFilter: &quot; + content);</span><br><span class="line">        return content;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Filter filter &#x3D; new RemoveBlankFilter();</span><br><span class="line">        filter.setNextFilter(new RemoveBottomLineFilter()).setNextFilter(new ToUppFilter());</span><br><span class="line">        System.out.println(&quot;Filter result: &quot; + filter.filter(&quot;abc de_fGHIJK&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Before RemoveBlankFilter: abc de_fGHIJK</span><br><span class="line">After RemoveBlankFilter: abcde_fGHIJK</span><br><span class="line">Before RemoveBottomLineFilter: abcde_fGHIJK</span><br><span class="line">After RemoveBottomLineFilter: abcdefGHIJK</span><br><span class="line">Before ToUppFilter: abcdefGHIJK</span><br><span class="line">After ToUppFilter: ABCDEFGHIJK</span><br><span class="line">Filter result: ABCDEFGHIJK</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h4><br>
+
+<p>将一个请求封装成一个对象，从而使您可以用不同的请求对客户进行参数化。</p>
+<p><img src="https://haitao.nos.netease.com/20190823101525_31ec9824-194d-4c00-9891-025b85d45b13.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 支持的请求处理逻辑</span><br><span class="line">public class Request &#123;</span><br><span class="line">    public int sum(int... array) &#123;</span><br><span class="line">        int result &#x3D; 0;</span><br><span class="line">        if (array !&#x3D; null) &#123;</span><br><span class="line">            for (int i : array) &#123;</span><br><span class="line">                result +&#x3D; i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int mul(int... array) &#123;</span><br><span class="line">        int result &#x3D; 1;</span><br><span class="line">        if (array !&#x3D; null) &#123;</span><br><span class="line">            for (int i : array) &#123;</span><br><span class="line">                result *&#x3D; i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 命令接口 </span><br><span class="line">public interface Order &#123;</span><br><span class="line">    int ORDER_SUM &#x3D; 0;</span><br><span class="line">    int ORDER_MUL &#x3D; 1;</span><br><span class="line"></span><br><span class="line">    int getOrderType();</span><br><span class="line"></span><br><span class="line">    int execute(int... array);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 累加命令</span><br><span class="line">public class SumOrder implements Order &#123;</span><br><span class="line">    private Request request;</span><br><span class="line"></span><br><span class="line">    public SumOrder(Request request) &#123;</span><br><span class="line">        this.request &#x3D; request;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getOrderType() &#123;</span><br><span class="line">        return Order.ORDER_SUM;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int execute(int... array) &#123;</span><br><span class="line">        return request.sum(array);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 累乘命令</span><br><span class="line">public class MulOrder implements Order &#123;</span><br><span class="line">    private Request request;</span><br><span class="line"></span><br><span class="line">    public MulOrder(Request request) &#123;</span><br><span class="line">        this.request &#x3D; request;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int getOrderType() &#123;</span><br><span class="line">        return Order.ORDER_MUL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int execute(int... array) &#123;</span><br><span class="line">        return request.mul(array);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 命令使用者</span><br><span class="line">public class User &#123;</span><br><span class="line">    Map&lt;Integer, Order&gt; orderMap &#x3D; new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void takeOrder(Order order) &#123;</span><br><span class="line">        orderMap.put(order.getOrderType(), order);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int executeOrder(int orderType, int... array) &#123;</span><br><span class="line">        Order order &#x3D; orderMap.get(orderType);</span><br><span class="line">        if (order !&#x3D; null) &#123;</span><br><span class="line">            return order.execute(array);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;you has not &quot; + orderType + &quot; order&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 测试命令使用者使用命令</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Request request &#x3D; new Request();</span><br><span class="line"></span><br><span class="line">        User user &#x3D; new User();</span><br><span class="line">        user.takeOrder(new MulOrder(request));</span><br><span class="line">        user.takeOrder(new SumOrder(request));</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;execute sum order: &quot; + user.executeOrder(Order.ORDER_SUM, 1, 2, 3, 4, 5));</span><br><span class="line">        System.out.println(&quot;execute mul order: &quot; + user.executeOrder(Order.ORDER_MUL, 1, 2, 3, 4, 5));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">execute sum order: 15</span><br><span class="line">execute mul order: 120</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h4><br>
+
+<p>保存一个对象的某个状态，以便在适当的时候恢复对象。</p>
+<p><img src="https://haitao.nos.netease.com/20190823103345_927af8ba-fda5-40df-a6bc-65e031d52688.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 备忘录内容</span><br><span class="line">public class Memento &#123;</span><br><span class="line">    String state;</span><br><span class="line"></span><br><span class="line">    public Memento(String state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getState() &#123;</span><br><span class="line">        return state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 备忘录管理</span><br><span class="line">public class MementoRecord &#123;</span><br><span class="line">    List&lt;Memento&gt; mementos &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void addMemento(Memento memento) &#123;</span><br><span class="line">        mementos.add(memento);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Memento getMemento(int index) &#123;</span><br><span class="line">        if (index &gt;&#x3D; 0 &amp;&amp; index &lt; mementos.size()) &#123;</span><br><span class="line">            return mementos.get(index);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void printMementoRecord() &#123;</span><br><span class="line">        System.out.println(&quot;Print MementoRecord&quot;);</span><br><span class="line">        for (Memento memento : mementos) &#123;</span><br><span class="line">            System.out.println(memento.getState());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 需要备忘状态的对象</span><br><span class="line">public class SomeObject &#123;</span><br><span class="line">    private String state;</span><br><span class="line"></span><br><span class="line">    public String getState() &#123;</span><br><span class="line">        return state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setState(String state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Memento getMemento() &#123;</span><br><span class="line">        return new Memento(state);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 测试备忘功能</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        MementoRecord mementoRecord &#x3D; new MementoRecord();</span><br><span class="line"></span><br><span class="line">        SomeObject someObject &#x3D; new SomeObject();</span><br><span class="line">        someObject.setState(&quot;state 1&quot;);</span><br><span class="line">        mementoRecord.addMemento(someObject.getMemento());</span><br><span class="line">        someObject.setState(&quot;state 2&quot;);</span><br><span class="line">        mementoRecord.addMemento(someObject.getMemento());</span><br><span class="line">        someObject.setState(&quot;state 3&quot;);</span><br><span class="line">        mementoRecord.addMemento(someObject.getMemento());</span><br><span class="line">        someObject.setState(&quot;state 4&quot;);</span><br><span class="line">        mementoRecord.addMemento(someObject.getMemento());</span><br><span class="line">        someObject.setState(&quot;state 5&quot;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;current: &quot; + someObject.getState());</span><br><span class="line">        mementoRecord.printMementoRecord();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">current: state 5</span><br><span class="line">Print MementoRecord</span><br><span class="line">state 1</span><br><span class="line">state 2</span><br><span class="line">state 3</span><br><span class="line">state 4</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h4><br>
+
+<p>允许对象在内部状态发生改变时改变它的行为。</p>
+<p><img src="https://haitao.nos.netease.com/20190823105632_123e6918-1751-4b99-96b7-7172628c6386.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义状态接口</span><br><span class="line">public interface State &#123;</span><br><span class="line">    void start(Context context);</span><br><span class="line"></span><br><span class="line">    void stop(Context context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定义使用状态的主体</span><br><span class="line">public class Context &#123;</span><br><span class="line">    private State state;</span><br><span class="line"></span><br><span class="line">    public Context() &#123;</span><br><span class="line">        this.state &#x3D; null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public State getState() &#123;</span><br><span class="line">        return state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setState(State state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void start() &#123;</span><br><span class="line">        getState().start(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        getState().stop(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 开始状态可以切换至结束状态</span><br><span class="line">public class StartState implements State &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void start(Context context) &#123;</span><br><span class="line">        System.out.println(&quot;current state is start&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop(Context context) &#123;</span><br><span class="line">        context.setState(new StopState());</span><br><span class="line">        System.out.println(&quot;change to stop state&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 结束状态可以切换至开始状态</span><br><span class="line">public class StopState implements State &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void start(Context context) &#123;</span><br><span class="line">        context.setState(new StartState());</span><br><span class="line">        System.out.println(&quot;change to start state&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void stop(Context context) &#123;</span><br><span class="line">        System.out.println(&quot;current state is stop&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 测试状态切换</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Context context &#x3D; new Context();</span><br><span class="line">        context.setState(new StopState());</span><br><span class="line">        context.start();</span><br><span class="line">        context.stop();</span><br><span class="line">        context.stop();</span><br><span class="line">        context.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">current state is start</span><br><span class="line">change to stop state</span><br><span class="line">current state is stop</span><br><span class="line">change to start state</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h4><br>
+
+<p>元素的执行算法可以随着访问者改变而改变，将数据结构与数据操作分离。</p>
+<p><img src="https://haitao.nos.netease.com/20190823142814_95d826f1-02a0-4761-9381-03b52bc21aeb.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义访问者管理类，设置对应身份访问的处理类型</span><br><span class="line">public class Computer &#123;</span><br><span class="line">    public static final int SUM_VISITOR &#x3D; 0;</span><br><span class="line">    public static final int SUB_VISITOR &#x3D; 1;</span><br><span class="line">    public static final int MUL_VISITOR &#x3D; 2;</span><br><span class="line"></span><br><span class="line">    Map&lt;Integer, Calculator&gt; calculatorMap &#x3D; new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public Computer() &#123;</span><br><span class="line">        calculatorMap.put(SUM_VISITOR, new Sum());</span><br><span class="line">        calculatorMap.put(SUB_VISITOR, new Sub());</span><br><span class="line">        calculatorMap.put(MUL_VISITOR, new Mul());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int visit(int visitorType, int a, int b) &#123;</span><br><span class="line">        Calculator calculator &#x3D; calculatorMap.get(visitorType);</span><br><span class="line">        if (calculator !&#x3D; null) &#123;</span><br><span class="line">            return calculator.calculator(a, b);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            throw new RuntimeException(&quot;unknown visitor type: &quot; + visitorType);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 计算接口</span><br><span class="line">public interface Calculator &#123;</span><br><span class="line">    int calculator(int a, int b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 相加</span><br><span class="line">public class Sum implements Calculator &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int calculator(int a, int b) &#123;</span><br><span class="line">        return a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 相减</span><br><span class="line">public class Sub implements Calculator &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int calculator(int a, int b) &#123;</span><br><span class="line">        return a - b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 相乘</span><br><span class="line">public class Mul implements Calculator &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int calculator(int a, int b) &#123;</span><br><span class="line">        return a * b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 测试</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Computer computer &#x3D; new Computer();</span><br><span class="line">        System.out.println(&quot;sum visitor: 2 + 3 &#x3D; &quot; + computer.visit(Computer.SUM_VISITOR, 2, 3));</span><br><span class="line">        System.out.println(&quot;sub visitor: 2 - 3 &#x3D; &quot; + computer.visit(Computer.SUB_VISITOR, 2, 3));</span><br><span class="line">        System.out.println(&quot;mul visitor: 2 * 3 &#x3D; &quot; + computer.visit(Computer.MUL_VISITOR, 2, 3));</span><br><span class="line">        System.out.println(&quot;unknown visitor: 2 &#x2F; 3 &#x3D; &quot; + computer.visit(-1, 2, 3));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sum visitor: 2 + 3 &#x3D; 5</span><br><span class="line">sub visitor: 2 - 3 &#x3D; -1</span><br><span class="line">mul visitor: 2 * 3 &#x3D; 6</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.RuntimeException: unknown visitor type: -1</span><br><span class="line">    at pattern.behavior.visit.Computer.visit(Computer.java:24)</span><br><span class="line">    at pattern.behavior.visit.Test.main(Test.java:9)</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h4><br>
+
+<p>用一个中介对象来封装一系列的对象交互，中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。</p>
+<p><img src="https://haitao.nos.netease.com/20190823114650_256d7b03-188d-4b8b-b549-38572d42162b.jpg" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    public String id;</span><br><span class="line">    public String name;</span><br><span class="line"></span><br><span class="line">    public User(String id, String name) &#123;</span><br><span class="line">        this.id &#x3D; id;</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Message &#123;</span><br><span class="line">    public String message;</span><br><span class="line"></span><br><span class="line">    public Message(String message) &#123;</span><br><span class="line">        this.message &#x3D; message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Mediator &#123;</span><br><span class="line">    public static void sendMessage(User fromUser, User toUser, Message message) &#123;</span><br><span class="line">        System.out.println(fromUser + &quot; -&gt; &quot; + toUser + &quot;: &quot; + message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        User xiaoming &#x3D; new User(&quot;1&quot;, &quot;小明&quot;);</span><br><span class="line">        User xiaogang &#x3D; new User(&quot;2&quot;, &quot;小刚&quot;);</span><br><span class="line"></span><br><span class="line">        Mediator.sendMessage(xiaoming, xiaogang, new Message(&quot;你在家么？&quot;));</span><br><span class="line">        Mediator.sendMessage(xiaogang, xiaoming, new Message(&quot;我在家，你要来玩不？&quot;));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">小明 -&gt; 小刚: 你在家么？</span><br><span class="line">小刚 -&gt; 小明: 我在家，你要来玩不？</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h4 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a>解释器模式</h4><br>
+
+<p>实现了一个表达式接口，该接口解释一个特定的上下文。这种模式被用在 SQL 解析、符号处理引擎等。</p>
+<p><img src="https://haitao.nos.netease.com/20190823140322_0df37ba9-4ad2-4b91-9c17-fa20c2c29729.jpg" alt></p>
+<p>找出一段区间内同时被 5，7，11 整除的数，通过提供一个 Solution 提供此类数字的表示方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 定义整除接口</span><br><span class="line">public interface IDivisible &#123;</span><br><span class="line">    boolean divisible(int number);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class FiveDivisible implements IDivisible &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public boolean divisible(int number) &#123;</span><br><span class="line">        if (number % 5 &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class SevenDivisible implements IDivisible &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public boolean divisible(int number) &#123;</span><br><span class="line">        if (number % 7 &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ElevenDivisible implements IDivisible &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public boolean divisible(int number) &#123;</span><br><span class="line">        if (number % 11 &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 找出一段区间内同时能被 5，7，11 整除的数</span><br><span class="line">public class Solution &#123;</span><br><span class="line">    private IDivisible fiveDivisible &#x3D; new FiveDivisible();</span><br><span class="line">    private IDivisible sevenDivisible &#x3D; new SevenDivisible();</span><br><span class="line">    private IDivisible elevenDivisible &#x3D; new ElevenDivisible();</span><br><span class="line"></span><br><span class="line">    public List&lt;Integer&gt; solution(int start, int end) &#123;</span><br><span class="line">        List&lt;Integer&gt; result &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        for (int i &#x3D; start; i &lt;&#x3D; end; i++) &#123;</span><br><span class="line">            if (divisible(i)) &#123;</span><br><span class="line">                result.add(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private boolean divisible(int number) &#123;</span><br><span class="line">        return fiveDivisible.divisible(number)</span><br><span class="line">                &amp;&amp; sevenDivisible.divisible(number)</span><br><span class="line">                &amp;&amp; elevenDivisible.divisible(number);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(new Solution().solution(1, 10000));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[385, 770, 1155, 1540, 1925, 2310, 2695, 3080, 3465, 3850, 4235, 4620, 5005, 5390, 5775, 6160, 6545, 6930, 7315, 7700, 8085, 8470, 8855, 9240, 9625]</span><br></pre></td></tr></table></figure>
+
+
+<br>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><br>
+
+<p>动手编写各种模式实例代码，发现工作中其实用到了其中的很多模式，自己却不知，通过这次梳理，加深了对设计模式的理解。</p>
+<p><br><br><br><br></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
+        <p><span>发布时间:</span>2019-08-20, 21:00:00</p>
+        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/" title="23种设计模式示例">https://littlegrow.top/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                    生产者消费者模式示例
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/08/19/Android-20180819-start-activity/">
+                    Activity启动流程
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#23种设计模式"><span class="toc-number">1.</span> <span class="toc-text">23种设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建型模式"><span class="toc-number">2.</span> <span class="toc-text">创建型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式"><span class="toc-number">2.1.</span> <span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#饿汉式"><span class="toc-number">2.1.1.</span> <span class="toc-text">饿汉式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#懒汉式"><span class="toc-number">2.1.2.</span> <span class="toc-text">懒汉式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#双重校验锁"><span class="toc-number">2.1.3.</span> <span class="toc-text">双重校验锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#枚举单例"><span class="toc-number">2.1.4.</span> <span class="toc-text">枚举单例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工厂方法模式"><span class="toc-number">2.2.</span> <span class="toc-text">工厂方法模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抽象工厂模式"><span class="toc-number">2.3.</span> <span class="toc-text">抽象工厂模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建造者模式"><span class="toc-number">2.4.</span> <span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原型模式"><span class="toc-number">2.5.</span> <span class="toc-text">原型模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结构型模式"><span class="toc-number">3.</span> <span class="toc-text">结构型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#适配器模式"><span class="toc-number">3.1.</span> <span class="toc-text">适配器模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰器模式"><span class="toc-number">3.2.</span> <span class="toc-text">装饰器模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代理模式"><span class="toc-number">3.3.</span> <span class="toc-text">代理模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#外观模式"><span class="toc-number">3.4.</span> <span class="toc-text">外观模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#桥接模式"><span class="toc-number">3.5.</span> <span class="toc-text">桥接模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#组合模式"><span class="toc-number">3.6.</span> <span class="toc-text">组合模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#享元模式"><span class="toc-number">3.7.</span> <span class="toc-text">享元模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行为型模式"><span class="toc-number">4.</span> <span class="toc-text">行为型模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#策略模式"><span class="toc-number">4.1.</span> <span class="toc-text">策略模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模版方法模式"><span class="toc-number">4.2.</span> <span class="toc-text">模版方法模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#观察者模式"><span class="toc-number">4.3.</span> <span class="toc-text">观察者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代器模式"><span class="toc-number">4.4.</span> <span class="toc-text">迭代器模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#责任链模式"><span class="toc-number">4.5.</span> <span class="toc-text">责任链模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#命令模式"><span class="toc-number">4.6.</span> <span class="toc-text">命令模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#备忘录模式"><span class="toc-number">4.7.</span> <span class="toc-text">备忘录模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态模式"><span class="toc-number">4.8.</span> <span class="toc-text">状态模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#访问者模式"><span class="toc-number">4.9.</span> <span class="toc-text">访问者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中介者模式"><span class="toc-number">4.10.</span> <span class="toc-text">中介者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解释器模式"><span class="toc-number">4.11.</span> <span class="toc-text">解释器模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+
+
+    
+      <section id="comments" style="margin: 2em; padding: 2em; background: rgba(255, 255, 255, 0.5)">
+    <div id="vcomment" class="comment"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@1.1.9/dist/Valine.min.js"></script>
+    <script>
+		new Valine({
+			el: '#vcomment',
+			notify: 'true',
+			verify: 'false',
+			app_id: "RWJCM9UQW07DGPJGy2xvOQ7l-gzGzoHsz",
+			app_key: "EY1VbDQQchduEg09LGaC8uPq",
+			placeholder: "说点什么吧...",
+			avatar: "mp"
+		});
+		// 去除 power by valine
+	    var infoEle = document.querySelector('#comments .info');
+	    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+	      infoEle.childNodes.forEach(function(item) {
+	        item.parentNode.removeChild(item);
+	      });
+	    }
+    </script>
+</section>
+    
+
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/" title="上一篇: 生产者消费者模式示例">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/08/19/Android-20180819-start-activity/" title="下一篇: Activity启动流程">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/09/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7%E5%BA%93/">我的工具库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/java-190919-builder-buffer/">StringBuffer、StringBuilder写入性能及线程安全总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/19/tools-190919-%E9%92%89%E9%92%89%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF/">钉钉机器人发送消息</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/18/java-190918-hashmap/">JDK1.8 HashMap tableSizeFor()、hash() 方法梳理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">okio 简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/06/java-190906-java-nio%E4%BD%BF%E7%94%A8%E5%88%9D%E6%8E%A2/">Java NIO 使用初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/04/Android-190903-Android%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">Android性能优化总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/03/%E5%B9%B6%E5%8F%91-190902-Semaphore-CountDownLatch-CyclicBarrier/">CountDownLatch、Semaphore、CyclicBarrier</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/02/%E5%B9%B6%E5%8F%91-190830-java-lock/">JAVA锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">java实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/28/third-190828-okhttp/">OKHTTP简单使用总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/23/common-190823-threadpool/">JAVA线程池</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/22/%E5%B9%B6%E5%8F%91-190822-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F/">生产者消费者模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/20/common-190820-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B/">23种设计模式示例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/19/Android-20180819-start-activity/">Activity启动流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/16/mock-data-md/">一种快速 mock 数据的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/14/shell-190814-%E4%B8%8D%E7%86%9F%E6%82%89%E7%9A%84%E5%91%BD%E4%BB%A4/">shell命令集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/08/server-190808-%E5%A6%82%E4%BD%95%E9%9B%86%E6%88%90Virtualview-tools%E6%8F%90%E4%BE%9B%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E7%BC%96%E8%AF%91Tangram%E7%BB%84%E4%BB%B6/">如何在后端服务中集成virtualview_tools编译Tangram组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/Android-190805-RecyclerView%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86/">RecyclerView ViewHoler 缓存机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/server-190806-%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/">后端服务快速接入二维码功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">Android Intent 传递数据限制</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/28/Android-190728-Android-v1-v2/">Android 签名和多渠道打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/tools-190726-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">时间戳和日期字符串快速转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/26/Android-190726-MemCache/">客户端支持带过期时间的缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/algorithm-190725-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">排序算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/25/tools-190725-%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95%E5%B0%8F%E5%B7%A5%E5%85%B7/">工作记录小工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/24/hello-world/">hexo简单使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2020 littlegrow  
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010802010091">
+                    &nbsp;&nbsp;
+                    <img src="https://haitao.nos.netease.com/20190816112710_607bb2b9-eb68-46f7-a443-8f2dbbc2e20c.png" style="height:20px"/>
+                    浙公网安备 33010802010091号
+                </a>  
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

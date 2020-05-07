@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="曾用python实现的小算法，防止以后找不到了，先放这里吧">
+<meta name="description" content="工作中经常会遇到图片压缩问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python实现常见算法">
-<meta property="og:url" content="https://littlegrow.top/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="Tinypng批量压缩图片">
+<meta property="og:url" content="https://littlegrow.top/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/index.html">
 <meta property="og:site_name" content="刘雷刚的博客">
-<meta property="og:description" content="曾用python实现的小算法，防止以后找不到了，先放这里吧">
+<meta property="og:description" content="工作中经常会遇到图片压缩问题">
 <meta property="og:locale" content="ch">
-<meta property="article:published_time" content="2019-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-06T01:13:30.911Z">
+<meta property="article:published_time" content="2020-05-07T09:10:08.859Z">
+<meta property="article:modified_time" content="2020-05-07T09:24:23.803Z">
 <meta property="article:author" content="littlegrow">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Python实现常见算法 | 刘雷刚的博客</title>
+<title>Tinypng批量压缩图片 | 刘雷刚的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -271,11 +271,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-algorithm-190729-python-算法" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-tools-200507-tinypng批量图片压缩" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/" class="article-date">
-      <time datetime="2019-07-28T16:00:00.000Z" itemprop="datePublished">2019-07-29</time>
+      <a href="/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/" class="article-date">
+      <time datetime="2020-05-07T09:10:08.859Z" itemprop="datePublished">2020-05-07</time>
 </a>
     </div>
   
@@ -288,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Python实现常见算法
+      Tinypng批量压缩图片
     </h1>
   
 
@@ -297,7 +297,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/python/">python</a>
+    <a class="article-category-link" href="/categories/%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/">图片压缩</a>
     </div>
 
 
@@ -309,65 +309,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>曾用<code>python</code>实现的小算法，防止以后找不到了，今后再用<code>python</code>实现的算法，也放在这里</p>
-<p><br><br></p>
-<h3 id="排序相关"><a href="#排序相关" class="headerlink" title="排序相关"></a>排序相关</h3><br>
+        <h3 id="tinypng"><a href="#tinypng" class="headerlink" title="tinypng"></a><a href="https://tinypng.com/" target="_blank" rel="noopener">tinypng</a></h3><p>tinypng是工作中常用的免费图片压缩工作，但是一次只能压缩20张图，且需要手动上传下载，效率低！</p>
+<p>本文通过python脚本教大家如何批量压缩图片</p>
+<h3 id="获取-API-KEY"><a href="#获取-API-KEY" class="headerlink" title="获取 API KEY"></a>获取 API KEY</h3><p>登入<a href="https://tinypng.com/developers" target="_blank" rel="noopener">开发者官网</a>到网站申请,只需要一个名字和一个邮箱就可以,API key会以链接的形式发到邮箱里</p>
+<p><font color="red">注: 一个账号一个月只能压缩500张图，但对于日常工作已经足够使用了</font></p>
+<h3 id="编写批量压缩脚本"><a href="#编写批量压缩脚本" class="headerlink" title="编写批量压缩脚本"></a>编写批量压缩脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"># encoding&#x3D;utf8</span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">from tinify import tinify</span><br><span class="line"></span><br><span class="line">tinify.key &#x3D; &quot;**********  此处替换为您申请到的API key *************&quot;</span><br><span class="line"></span><br><span class="line">useage &#x3D; &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    tiny 图片|图片文件夹 目标文件夹</span><br><span class="line">        </span><br><span class="line">        必要参数：</span><br><span class="line">            图片|图片文件夹</span><br><span class="line">        </span><br><span class="line">        可选参数：</span><br><span class="line">            目标文件夹, 默认 &#96;.&#x2F;tiny&#96;</span><br><span class="line">        </span><br><span class="line">        压缩图片默认存储在当前目录 &#96;tiny&#96; 文件夹下</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def formatSize(bytes):</span><br><span class="line">    bytes &#x3D; float(bytes)</span><br><span class="line">    kb &#x3D; bytes &#x2F; 1024</span><br><span class="line">    if kb &gt;&#x3D; 1024:</span><br><span class="line">        M &#x3D; kb &#x2F; 1024</span><br><span class="line">        if M &gt;&#x3D; 1024:</span><br><span class="line">            G &#x3D; M &#x2F; 1024</span><br><span class="line">            return &quot;%.2fG&quot; % G</span><br><span class="line">        else:</span><br><span class="line">            return &quot;%.2fM&quot; % M</span><br><span class="line">    else:</span><br><span class="line">        return &quot;%.2fkb&quot; % kb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def tinifypng(source, target):</span><br><span class="line">    print</span><br><span class="line">    originSize &#x3D; os.path.getsize(source)</span><br><span class="line">    print(&quot;picture: &quot; + formatSize(originSize) + &quot; &quot; + source)</span><br><span class="line">    sourced &#x3D; tinify.from_file(source)</span><br><span class="line">    sourced.to_file(target)</span><br><span class="line">    tinySize &#x3D; os.path.getsize(target)</span><br><span class="line">    print(&quot;tiny to: &quot; + formatSize(tinySize) + &quot; &quot; + target)</span><br><span class="line">    print(&quot;cut down rate:&quot; + (&quot;%0.2f&quot; % ((originSize - tinySize) &#x2F; float(originSize) * 100)) + &quot;%&quot;)</span><br><span class="line">    print(&quot;&#x3D;&quot; * 48)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    if len(sys.argv) &gt;&#x3D; 2:</span><br><span class="line">        path &#x3D; sys.argv[1]</span><br><span class="line">        if os.path.exists(path):</span><br><span class="line">            sourcePath &#x3D; os.path.abspath(path)</span><br><span class="line">            targetDir &#x3D; sys.argv[2] if len(sys.argv) &gt;&#x3D; 3 else &quot;.&#x2F;tiny&quot;</span><br><span class="line">            if not os.path.exists(targetDir):</span><br><span class="line">                os.mkdir(targetDir)</span><br><span class="line">            targetPath &#x3D; os.path.abspath(targetDir)</span><br><span class="line">            if os.path.isfile(sourcePath):</span><br><span class="line">                targetFile &#x3D; targetPath + &quot;&#x2F;&quot; + os.path.basename(sourcePath)</span><br><span class="line">                tinifypng(sourcePath, targetFile)</span><br><span class="line">            else:</span><br><span class="line">                files &#x3D; os.listdir(sourcePath)</span><br><span class="line">                for file in files:</span><br><span class="line">                    if file.endswith(&quot;.png&quot;) or file.endswith(&quot;.jpg&quot;):</span><br><span class="line">                        fileSource &#x3D; sourcePath + &quot;&#x2F;&quot; + file</span><br><span class="line">                        fileTarget &#x3D; targetPath + &quot;&#x2F;&quot; + file</span><br><span class="line">                        tinifypng(fileSource, fileTarget)</span><br><span class="line">        else:</span><br><span class="line">            print(&quot;资源不存在&quot;)</span><br><span class="line">    else:</span><br><span class="line">        print(useage)</span><br></pre></td></tr></table></figure>
 
-<h4 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h4><br>
+<h3 id="生成可执行文件"><a href="#生成可执行文件" class="headerlink" title="生成可执行文件"></a>生成可执行文件</h3><br>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 直接选择排序</span><br><span class="line">def select_sort(array):</span><br><span class="line">    if not array:</span><br><span class="line">        return []</span><br><span class="line">    for i in range(len(array) - 1, 0, -1):</span><br><span class="line">        large &#x3D; array[0]</span><br><span class="line">        pos &#x3D; 0</span><br><span class="line">        for j in range(1, i + 1):</span><br><span class="line">            if array[j] &gt; large:</span><br><span class="line">                pos &#x3D; j</span><br><span class="line">                large &#x3D; array[j]</span><br><span class="line">        array[pos], array[i] &#x3D; array[i], array[pos]</span><br><span class="line">    return array</span><br></pre></td></tr></table></figure>
+<p><code>Python</code> 脚本可使用 <code>pyinstaller</code> 模块很方便的打包成可执行文件(使用方法参看<a href="http://www.pyinstaller.org/" target="_blank" rel="noopener">pyinstaller官网</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -F [脚本文件名].py</span><br></pre></td></tr></table></figure>
 
-<br>
-
-<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 冒泡排序</span><br><span class="line">def bubble_sort(array):</span><br><span class="line">    if not array:</span><br><span class="line">        return []</span><br><span class="line">    for i in range(len(array) - 1, 0, -1):</span><br><span class="line">        for j in range(i):</span><br><span class="line">            if array[j] &gt; array[j + 1]:</span><br><span class="line">                array[j], array[j + 1] &#x3D; array[j + 1], array[j]</span><br><span class="line">    return array</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 快速排序</span><br><span class="line">def quick_sort(array):</span><br><span class="line">    if not array:</span><br><span class="line">        return []</span><br><span class="line">    quick_sort_temp(array, 0, len(array) - 1)</span><br><span class="line">    return array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def quick_sort_temp(array, low, high):</span><br><span class="line">    if low &gt;&#x3D; high:</span><br><span class="line">        return</span><br><span class="line">    flag &#x3D; array[low]</span><br><span class="line">    l, h &#x3D; low + 1, high</span><br><span class="line">    while l &lt; h:</span><br><span class="line">        while h &gt; l and array[h] &gt;&#x3D; flag:</span><br><span class="line">            h -&#x3D; 1</span><br><span class="line">        while l &lt; h and array[l] &lt; flag:</span><br><span class="line">            l +&#x3D; 1</span><br><span class="line">        if l !&#x3D; h:</span><br><span class="line">            array[l], array[h] &#x3D; array[h], array[l]</span><br><span class="line">    array[low], array[l] &#x3D; array[l], array[low]</span><br><span class="line">    quick_sort_temp(array, low, l - 1)</span><br><span class="line">    quick_sort_temp(array, l + 1, high)</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 堆排序</span><br><span class="line">def heep_sort(array):</span><br><span class="line">    if not array:</span><br><span class="line">        return []</span><br><span class="line">    for i in range(len(array) - 1, 0, -1):</span><br><span class="line">        heep_sort_up(array, i)</span><br><span class="line">    for i in range(len(array) - 1, 0, -1):</span><br><span class="line">        array[0], array[i] &#x3D; array[i], array[0]</span><br><span class="line">        heep_sort_down(array, i - 1, 0)</span><br><span class="line">    return array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heep_sort_up(array, pos):</span><br><span class="line">    while pos &gt; 0:</span><br><span class="line">        father &#x3D; (pos - 1) &#x2F; 2</span><br><span class="line">        if array[father] &lt;&#x3D; array[pos]:</span><br><span class="line">            array[father], array[pos] &#x3D; array[pos], array[father]</span><br><span class="line">        pos &#x3D; father</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def heep_sort_down(array, max_pos, root):</span><br><span class="line">    if root &gt; max_pos:</span><br><span class="line">        return</span><br><span class="line">    large &#x3D; root</span><br><span class="line">    left, right &#x3D; root * 2 + 1, root * 2 + 2</span><br><span class="line">    if left &lt;&#x3D; max_pos and array[large] &lt; array[left]:</span><br><span class="line">        large &#x3D; left</span><br><span class="line">    if right &lt;&#x3D; max_pos and array[large] &lt; array[right]:</span><br><span class="line">        large &#x3D; right</span><br><span class="line">    if large !&#x3D; root:</span><br><span class="line">        array[large], array[root] &#x3D; array[root], array[large]</span><br><span class="line">        heep_sort_down(array, max_pos, large)</span><br></pre></td></tr></table></figure>
-
-<p><br><br></p>
-<h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><br>
-
-<h4 id="斐波那契数列-1"><a href="#斐波那契数列-1" class="headerlink" title="斐波那契数列-1"></a>斐波那契数列-1</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 斐波那契数列 o(n^2)</span><br><span class="line">fab &#x3D; lambda n: fab(n - 1) + fab(n - 2) if n &gt; 1 else n</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="斐波那契数列-2"><a href="#斐波那契数列-2" class="headerlink" title="斐波那契数列-2"></a>斐波那契数列-2</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 斐波那契数列 o(n^2)</span><br><span class="line">def fabN(n):</span><br><span class="line">    return fabN(n - 1) + fabN(n - 2) if n &gt; 1 else n</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h4 id="斐波那契数列-3"><a href="#斐波那契数列-3" class="headerlink" title="斐波那契数列-3"></a>斐波那契数列-3</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 斐波那契数列 o(n)</span><br><span class="line">def fabN1(n):</span><br><span class="line">    if n &gt; 1:</span><br><span class="line">        temp &#x3D; [0, 1]</span><br><span class="line">        while len(temp) &lt;&#x3D; n:</span><br><span class="line">            temp.append(temp[len(temp) - 1] + temp[len(temp) - 2])</span><br><span class="line">        return temp[len(temp) - 1]</span><br><span class="line">    else:</span><br><span class="line">        return n</span><br></pre></td></tr></table></figure>
-
-<p><br><br></p>
-<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 二分查找</span><br><span class="line">def bin_search(array, start, end, value):</span><br><span class="line">    if not array or start &lt; 0 or end &gt;&#x3D; len(array):</span><br><span class="line">        return -1</span><br><span class="line">    if start &gt;&#x3D; end:</span><br><span class="line">        return -1</span><br><span class="line">    mid &#x3D; (start + end) &gt;&gt; 1</span><br><span class="line">    if array[mid] &#x3D;&#x3D; value:</span><br><span class="line">        return mid</span><br><span class="line">    elif array[mid] &gt; value:</span><br><span class="line">        return bin_search(array, start, mid, value)</span><br><span class="line">    else:</span><br><span class="line">        return bin_search(array, mid, end, value)</span><br></pre></td></tr></table></figure>
-
-<p><br><br></p>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><br>
-
-<h4 id="回文字符串"><a href="#回文字符串" class="headerlink" title="回文字符串"></a>回文字符串</h4><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 回文字符串</span><br><span class="line">def is_huiwen(data):</span><br><span class="line">    if not data:</span><br><span class="line">        return False</span><br><span class="line">    size &#x3D; len(data)</span><br><span class="line">    for i in range(size &#x2F; 2):</span><br><span class="line">        if data[i] !&#x3D; data[size - 1 - i]:</span><br><span class="line">            return False</span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
-
-<p><br><br><br><br><br></p>
-
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">➜  res git:(master) tinypng drawable-xxhdpi</span><br><span class="line">picture: 2.72kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;logo_push.png</span><br><span class="line">tiny to: 1.64kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;logo_push.png</span><br><span class="line">cut down rate:39.51%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">picture: 10.02kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;logo_round.png</span><br><span class="line">tiny to: 3.64kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;logo_round.png</span><br><span class="line">cut down rate:63.69%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">picture: 9.10kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;icon_member_sweet_magic_level.png</span><br><span class="line">tiny to: 3.76kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;icon_member_sweet_magic_level.png</span><br><span class="line">cut down rate:58.69%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">picture: 3.58kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;icon_pay_default.png</span><br><span class="line">tiny to: 1.45kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;icon_pay_default.png</span><br><span class="line">cut down rate:59.49%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">picture: 11.09kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;icon_login_weibo.png</span><br><span class="line">tiny to: 2.24kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;icon_login_weibo.png</span><br><span class="line">cut down rate:79.80%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">picture: 2.24kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;drawable-xxhdpi&#x2F;icon_tab_message_unselect.png</span><br><span class="line">tiny to: 0.79kb &#x2F;Users&#x2F;liuleigang&#x2F;workspace&#x2F;android&#x2F;ssos-android&#x2F;app&#x2F;src&#x2F;main&#x2F;res&#x2F;tiny&#x2F;icon_tab_message_unselect.png</span><br><span class="line">cut down rate:64.75%</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -375,13 +328,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/">Python实现常见算法</a></p>
+        <p><span>本文标题:</span><a href="/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/">Tinypng批量压缩图片</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
-        <p><span>发布时间:</span>2019-07-29, 00:00:00</p>
-        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p><span>发布时间:</span>2020-05-07, 17:10:08</p>
+        <p><span>最后更新:</span>2020-05-07, 17:24:23</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/" title="Python实现常见算法">https://littlegrow.top/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/07/29/algorithm-190729-python-%E7%AE%97%E6%B3%95/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/" title="Tinypng批量压缩图片">https://littlegrow.top/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -393,16 +346,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/">
-                    Android Intent 传递数据限制
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/07/28/Android-190728-Android-v1-v2/">
-                    Android 签名和多渠道打包
+                <a href="/2020/05/06/tools-200506-MAC%E5%AE%89%E8%A3%85MYSQL/">
+                    mac 安装 mysql
                 </a>
             </div>
         
@@ -413,7 +360,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#排序相关"><span class="toc-number">1.</span> <span class="toc-text">排序相关</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#直接选择排序"><span class="toc-number">1.1.</span> <span class="toc-text">直接选择排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#冒泡排序"><span class="toc-number">1.2.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#快速排序"><span class="toc-number">1.3.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#堆排序"><span class="toc-number">1.4.</span> <span class="toc-text">堆排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">2.</span> <span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#斐波那契数列-1"><span class="toc-number">2.1.</span> <span class="toc-text">斐波那契数列-1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#斐波那契数列-2"><span class="toc-number">2.2.</span> <span class="toc-text">斐波那契数列-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#斐波那契数列-3"><span class="toc-number">2.3.</span> <span class="toc-text">斐波那契数列-3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二分查找"><span class="toc-number">3.</span> <span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串"><span class="toc-number">4.</span> <span class="toc-text">字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#回文字符串"><span class="toc-number">4.1.</span> <span class="toc-text">回文字符串</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#tinypng"><span class="toc-number">1.</span> <span class="toc-text">tinypng</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取-API-KEY"><span class="toc-number">2.</span> <span class="toc-text">获取 API KEY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写批量压缩脚本"><span class="toc-number">3.</span> <span class="toc-text">编写批量压缩脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成可执行文件"><span class="toc-number">4.</span> <span class="toc-text">生成可执行文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用示例"><span class="toc-number">5.</span> <span class="toc-text">使用示例</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn,
@@ -464,15 +411,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/08/05/Android-190805-intent%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98/" title="上一篇: Android Intent 传递数据限制">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/07/28/Android-190728-Android-v1-v2/" title="下一篇: Android 签名和多渠道打包">
+            <a href="/2020/05/06/tools-200506-MAC%E5%AE%89%E8%A3%85MYSQL/" title="下一篇: mac 安装 mysql">
                 <i class="fa fa-angle-right"></i>
             </a>
         

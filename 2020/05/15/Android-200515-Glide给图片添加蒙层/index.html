@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="APK大小增加过快，需要及时优化瘦身，往往大文件资源优化能带来显著效果，本文采取一种方案快速找出大文件资源。">
+<meta name="description" content="使用Glide图片加载框架，记录如何统一给图片添加蒙层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="APK瘦身资源优化，查找大文件">
-<meta property="og:url" content="https://littlegrow.top/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="Glide图片加载添加蒙层">
+<meta property="og:url" content="https://littlegrow.top/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/index.html">
 <meta property="og:site_name" content="刘雷刚的博客">
-<meta property="og:description" content="APK大小增加过快，需要及时优化瘦身，往往大文件资源优化能带来显著效果，本文采取一种方案快速找出大文件资源。">
+<meta property="og:description" content="使用Glide图片加载框架，记录如何统一给图片添加蒙层">
 <meta property="og:locale" content="ch">
-<meta property="og:image" content="https://haitao.nos.netease.com/20190912100926_7340d896-de4f-49c5-9ba0-4c9aa4273459.jpg">
-<meta property="og:image" content="https://haitao.nos.netease.com/20190912102600_c33bfef7-e2ae-46e6-80e2-7360eab1e00e.jpg">
-<meta property="article:published_time" content="2019-09-12T03:10:00.000Z">
-<meta property="article:modified_time" content="2020-05-06T01:13:30.914Z">
+<meta property="article:published_time" content="2020-05-15T06:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-15T06:38:57.135Z">
 <meta property="article:author" content="littlegrow">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://haitao.nos.netease.com/20190912100926_7340d896-de4f-49c5-9ba0-4c9aa4273459.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>APK瘦身资源优化，查找大文件 | 刘雷刚的博客</title>
+<title>Glide图片加载添加蒙层 | 刘雷刚的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -274,11 +271,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-tools-190912-APK瘦身查找大文件" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Android-200515-Glide给图片添加蒙层" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/" class="article-date">
-      <time datetime="2019-09-12T03:10:00.000Z" itemprop="datePublished">2019-09-12</time>
+      <a href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/" class="article-date">
+      <time datetime="2020-05-15T06:00:00.000Z" itemprop="datePublished">2020-05-15</time>
 </a>
     </div>
   
@@ -291,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      APK瘦身资源优化，查找大文件
+      Glide图片加载添加蒙层
     </h1>
   
 
@@ -300,7 +297,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><a class="article-category-link" href="/categories/%E5%B7%A5%E5%85%B7/APK%E7%98%A6%E8%BA%AB/">APK瘦身</a>
+    <a class="article-category-link" href="/categories/Glide/">Glide</a><a class="article-category-link" href="/categories/Glide/%E8%92%99%E5%B1%82/">蒙层</a>
     </div>
 
 
@@ -312,41 +309,127 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><br>
-
-<p>本文讲述如何开发一款小工具用于快速检索大文件，先来体验一下如何使用：</p>
-<p><img src="https://haitao.nos.netease.com/20190912100926_7340d896-de4f-49c5-9ba0-4c9aa4273459.jpg" alt></p>
-<p>指定检索文件夹、文件大小，将循环遍历出目录下所有文件，筛选出大于设置尺寸的文件，并排序输出。<br>应用开发者可从这些大文件着手，进行APK资源瘦身。</p>
-<br>
-
-<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><br>
-
-<p>使用<code>python</code>脚本实现</p>
-<p><strong>步骤一</strong>：遍历文件夹</p>
-<p>使用 <code>os</code> 模块 <code>walk()</code> 方法，很方便遍历出文件列表，<code>root</code> 指文件夹路径，<code>dirs</code> 文件下的子文件夹列表，<code>files</code> 文件夹下的文件列表，此方法循环遍历子文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for root, dirs, files in os.walk(path):</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
-
-<p><strong>步骤二</strong>：查找出文件大小大于设置值的文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for fil in files:</span><br><span class="line">   tmpPath &#x3D; os.path.join(root, fil)</span><br><span class="line">   tmpSize &#x3D; os.path.getsize(tmpPath)</span><br><span class="line">   # 跳过文件大小 小于设置值的文件</span><br><span class="line">   if tmpSize &lt; size:</span><br><span class="line">       continue</span><br><span class="line">   tmpFile &#x3D; SrcFile(tmpPath, tmpSize)</span><br><span class="line">   print tmpFile</span><br><span class="line">   resultFiles.append(tmpFile)</span><br></pre></td></tr></table></figure>
-
-<p><strong>步骤三</strong>：对筛选出的文件排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resultFiles &#x3D; sorted(resultFiles, cmp&#x3D;lambda x, y: cmp(x.size, y.size), reverse&#x3D;True)</span><br></pre></td></tr></table></figure>
-
-<p><strong>步骤四</strong>：从命令行读取路径和文件大小参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    if len(sys.argv) !&#x3D; 3:</span><br><span class="line">        print use_age</span><br><span class="line">    else:</span><br><span class="line">        try:</span><br><span class="line">            path &#x3D; sys.argv[1]</span><br><span class="line">            if not os.path.exists(path):</span><br><span class="line">                raise Exception(&quot;文件夹不存在&quot;)</span><br><span class="line">            size &#x3D; int(sys.argv[2])</span><br><span class="line">            print &quot;&#x3D;&quot; * 50</span><br><span class="line">            print &quot;正在检索大于 %sK 的文件&quot; % size</span><br><span class="line">            print</span><br><span class="line">            result &#x3D; list_file_size(path, size * 1024)</span><br><span class="line">            if result:</span><br><span class="line">                print</span><br><span class="line">                print &quot;&#x3D;&quot; * 50</span><br><span class="line">                print &quot;共检索出%s个文件，按大小排序后: \n&quot; % len(result)</span><br><span class="line">                for item in result:</span><br><span class="line">                    print item</span><br><span class="line">            else:</span><br><span class="line">                print</span><br><span class="line">                print &quot;&#x3D;&quot; * 50</span><br><span class="line">                print &quot;未找符合条件的文件 \n&quot;</span><br><span class="line">        except Exception, e:</span><br><span class="line">            print str(e)</span><br><span class="line">            print use_age</span><br></pre></td></tr></table></figure>
-
-<p><strong>步骤五</strong>：编译生成可执行文件</p>
-<p><code>Python</code> 脚本可使用 <code>pyinstaller</code> 模块很方便的打包成可执行文件(使用方法参看<a href="http://www.pyinstaller.org/" target="_blank" rel="noopener">pyinstaller官网</a>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -F list.py</span><br></pre></td></tr></table></figure>
-
-<p><strong>步骤六</strong>：查看使用方法</p>
-<p><img src="https://haitao.nos.netease.com/20190912102600_c33bfef7-e2ae-46e6-80e2-7360eab1e00e.jpg" alt></p>
-<br>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><br>
-
-<p>如果您使用mac， 可下载<a href="https://haitao.nos.netease.com/20190912102752_161a4e1c-3ff5-49e0-9bad-41c4a0944960" target="_blank" rel="noopener">可执行脚本</a>使用<br>当然您也可以自行编译源码，<a href="https://haitao.nos.netease.com/20190912102917_a169bad6-8229-4fc4-abf7-3b4427efa29f.py" target="_blank" rel="noopener">点击下载源码</a></p>
-<p><br><br><br><br></p>
+        <h3 id="Glide图片加载添加蒙层"><a href="#Glide图片加载添加蒙层" class="headerlink" title="Glide图片加载添加蒙层"></a>Glide图片加载添加蒙层</h3><p>在Glide中，<a href="https://muyangmin.github.io/glide-docs-cn/doc/transformations.html" target="_blank" rel="noopener">Transformations</a> 可以获取资源并修改它，然后返回被修改后的资源。通常变换操作是用来完成剪裁或对位图应用过滤器，但它也可以用于转换GIF动画，甚至自定义的资源类型。</p>
+<h5 id="图片添加蒙层"><a href="#图片添加蒙层" class="headerlink" title="图片添加蒙层"></a>图片添加蒙层</h5><p>尽管 Glide 提供了各种各样的内置 <a href="https://muyangmin.github.io/glide-docs-cn/doc/transformations.html" target="_blank" rel="noopener">Transformations</a>  实现，如果你需要额外的功能，你也可以实现你自己的 Transformation。</p>
+<ul>
+<li>蒙层添加步骤</li>
+</ul>
+<ol>
+<li>获取原图，在画布上绘制图片</li>
+<li>从缓存或动态生成蒙层图片</li>
+<li>将蒙层图片绘制在画布上</li>
+<li>返回变换后的图片</li>
+</ol>
+<p>‘’’<br>import android.graphics.Bitmap;<br>import android.graphics.Canvas;<br>import android.graphics.Paint;<br>import android.graphics.Rect;</p>
+<p>import androidx.annotation.NonNull;</p>
+<p>import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;<br>import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;<br>import com.mxbc.mxsa.R;</p>
+<p>import java.security.MessageDigest;</p>
+<p>/**</p>
+<ul>
+<li><p>自定义图片layer</p>
+</li>
+<li><p>/<br>public class MxImageMaskTransformation extends BitmapTransformation {<br>  private static final int VERSION = 1;<br>  private static final String ID =</p>
+<pre><code>&quot;com.mxbc.mxsa.base.utils.MxImageMaskTransformation.&quot; + VERSION;</code></pre><p>  private int color;<br>  private int radius;<br>  private Paint paint = new Paint();<br>  private Rect srcRec = new Rect();<br>  private Rect toRec = new Rect();</p>
+<p>  public MxImageMaskTransformation() {</p>
+<pre><code>this(Color.parse(&quot;#10000000&quot;), 0);</code></pre><p>  }</p>
+<p>  public MxImageMaskTransformation(int color, int radius) {</p>
+<pre><code>this.color = color;
+this.radius = radius;
+paint.setAntiAlias(true);</code></pre><p>  }</p>
+<p>  @Override<br>  protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {</p>
+<pre><code>return maskBitmap(pool, toTransform, outWidth, outHeight);</code></pre><p>  }</p>
+<p>  private Bitmap maskBitmap(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {</p>
+<pre><code>if (source == null) return null;
+srcRec.right = source.getWidth();
+srcRec.bottom = source.getHeight();
+toRec.right = outWidth;
+toRec.bottom = outHeight;
+Bitmap result = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+Canvas canvas = new Canvas(result);
+canvas.drawBitmap(source, srcRec, toRec, paint);
+Bitmap bitmap = BitmapUtils.getBitmap(toRec.width(), toRec.height(), ScreenUtils.dp2px(radius), color);
+canvas.drawBitmap(bitmap, srcRec, toRec, paint);
+return result;</code></pre><p>  }</p>
+<p>  @Override<br>  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {</p>
+<pre><code>messageDigest.update((ID + color + radius).getBytes(CHARSET));</code></pre><p>  }</p>
+<p>  @Override<br>  public boolean equals(Object o) {</p>
+<pre><code>if (!(o instanceof MxImageMaskTransformation)) {
+    return false;
+}
+MxImageMaskTransformation temp = (MxImageMaskTransformation) o;
+return temp.color == color &amp;&amp; temp.radius == radius;</code></pre><p>  }</p>
+<p>  @Override<br>  public int hashCode() {</p>
+<pre><code>return ID.hashCode() + color + radius * 10;</code></pre><p>  }<br>}<br>‘’’</p>
+</li>
+</ul>
+<h5 id="动态生成图片"><a href="#动态生成图片" class="headerlink" title="动态生成图片"></a>动态生成图片</h5><ul>
+<li>要点</li>
+</ul>
+<ol>
+<li>根据设置尺寸、圆角、颜色值，动态创建bitmap</li>
+<li>创建的图片使用弱引用缓存</li>
+<li>优先使用缓存的图片</li>
+</ol>
+<p>‘’’<br>import android.graphics.Bitmap;<br>import android.graphics.Canvas;<br>import android.graphics.Paint;<br>import android.graphics.RectF;</p>
+<p>import java.lang.ref.WeakReference;<br>import java.util.HashMap;<br>import java.util.Map;</p>
+<p>/**</p>
+<ul>
+<li><p>动态生成图片</p>
+</li>
+<li><p>/<br>public class BitmapUtils {<br>  /**</p>
+<ul>
+<li><p>缓存动态图片，提升效率</p>
+</li>
+<li><p>/<br>private static Map&lt;String, WeakReference<Bitmap>&gt; bitmapCache = new HashMap&lt;&gt;();</Bitmap></p>
+<p>/**</p>
+</li>
+<li><p>动态获取bitmap</p>
+</li>
+<li></li>
+<li><p>@param width  图片高度</p>
+</li>
+<li><p>@param height 图片宽度</p>
+</li>
+<li><p>@param radius 图片圆角</p>
+</li>
+<li><p>@param color  图片颜色</p>
+</li>
+<li><p>@return 动态生成图片</p>
+</li>
+<li><p>/<br>public static Bitmap getBitmap(int width, int height, int radius, int color) {<br>  String key = getKey(width, height, radius, color);<br>  Bitmap bitmap = getCacheBitmap(key);<br>  if (null == bitmap) {</p>
+<pre><code>bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+Canvas canvas = new Canvas(bitmap);
+Paint paint = new Paint();
+paint.setColor(color);
+paint.setAntiAlias(true);
+paint.setStyle(Paint.Style.FILL_AND_STROKE);
+canvas.drawRoundRect(new RectF(0, 0, width, height), radius, radius, paint);
+bitmapCache.put(key, new WeakReference&lt;&gt;(bitmap));</code></pre><p>  }<br>  return bitmap;<br>}</p>
+<p>/**</p>
+</li>
+<li><p>生成缓存key值</p>
+</li>
+<li><p>/<br>private static String getKey(int width, int height, int radius, int color) {<br>  return “Bitmap” + width + height + radius + color;<br>}</p>
+<p>/**</p>
+</li>
+<li><p>获取缓存的图片</p>
+</li>
+<li></li>
+<li><p>@param key 图片key</p>
+</li>
+<li><p>/<br>private static Bitmap getCacheBitmap(String key) {<br>  if (bitmapCache.containsKey(key)) {</p>
+<pre><code>WeakReference&lt;Bitmap&gt; bitmapWeakReference = bitmapCache.get(key);
+if (null != bitmapWeakReference) {
+    Bitmap bitmap = bitmapWeakReference.get();
+    if (null != bitmap &amp;&amp; !bitmap.isRecycled()) {
+        return bitmap;
+    }
+}</code></pre><p>  }<br>  return null;<br>}<br>}<br>‘’’</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>初步想法是使用网上开源的解决方案，但开源方案实现的蒙层效果均不太理想，因此分享出来自己造的轮子，希望给遇到同一问题的开发者提供思路。</p>
 
       
     </div>
@@ -355,13 +438,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/">APK瘦身资源优化，查找大文件</a></p>
+        <p><span>本文标题:</span><a href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/">Glide图片加载添加蒙层</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
-        <p><span>发布时间:</span>2019-09-12, 11:10:00</p>
-        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p><span>发布时间:</span>2020-05-15, 14:00:00</p>
+        <p><span>最后更新:</span>2020-05-15, 14:38:57</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/" title="APK瘦身资源优化，查找大文件">https://littlegrow.top/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/09/12/tools-190912-APK%E7%98%A6%E8%BA%AB%E6%9F%A5%E6%89%BE%E5%A4%A7%E6%96%87%E4%BB%B6/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/" title="Glide图片加载添加蒙层">https://littlegrow.top/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -373,16 +456,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/09/18/java-190918-hashmap/">
-                    JDK1.8 HashMap tableSizeFor()、hash() 方法梳理
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/">
-                    okio 简单使用总结
+                <a href="/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/">
+                    Tinypng批量压缩图片
                 </a>
             </div>
         
@@ -393,7 +470,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现方式"><span class="toc-number">2.</span> <span class="toc-text">实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Glide图片加载添加蒙层"><span class="toc-number">1.</span> <span class="toc-text">Glide图片加载添加蒙层</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#图片添加蒙层"><span class="toc-number">1.0.1.</span> <span class="toc-text">图片添加蒙层</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#动态生成图片"><span class="toc-number">1.0.2.</span> <span class="toc-text">动态生成图片</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">1.0.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn,
@@ -444,15 +521,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/09/18/java-190918-hashmap/" title="上一篇: JDK1.8 HashMap tableSizeFor()、hash() 方法梳理">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/09/11/java-190911-java-okio%E4%BD%BF%E7%94%A8/" title="下一篇: okio 简单使用总结">
+            <a href="/2020/05/07/tools-200507-tinypng%E6%89%B9%E9%87%8F%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/" title="下一篇: Tinypng批量压缩图片">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -23,7 +23,7 @@
 <meta property="og:description" content="使用Glide图片加载框架，记录如何统一给图片添加蒙层">
 <meta property="og:locale" content="ch">
 <meta property="article:published_time" content="2020-05-15T06:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-15T06:38:57.135Z">
+<meta property="article:modified_time" content="2020-05-15T06:41:41.353Z">
 <meta property="article:author" content="littlegrow">
 <meta name="twitter:card" content="summary">
 
@@ -320,49 +320,80 @@
 <li>将蒙层图片绘制在画布上</li>
 <li>返回变换后的图片</li>
 </ol>
-<p>‘’’<br>import android.graphics.Bitmap;<br>import android.graphics.Canvas;<br>import android.graphics.Paint;<br>import android.graphics.Rect;</p>
-<p>import androidx.annotation.NonNull;</p>
-<p>import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;<br>import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;<br>import com.mxbc.mxsa.R;</p>
-<p>import java.security.MessageDigest;</p>
-<p>/**</p>
-<ul>
-<li><p>自定义图片layer</p>
-</li>
-<li><p>/<br>public class MxImageMaskTransformation extends BitmapTransformation {<br>  private static final int VERSION = 1;<br>  private static final String ID =</p>
-<pre><code>&quot;com.mxbc.mxsa.base.utils.MxImageMaskTransformation.&quot; + VERSION;</code></pre><p>  private int color;<br>  private int radius;<br>  private Paint paint = new Paint();<br>  private Rect srcRec = new Rect();<br>  private Rect toRec = new Rect();</p>
-<p>  public MxImageMaskTransformation() {</p>
-<pre><code>this(Color.parse(&quot;#10000000&quot;), 0);</code></pre><p>  }</p>
-<p>  public MxImageMaskTransformation(int color, int radius) {</p>
-<pre><code>this.color = color;
-this.radius = radius;
-paint.setAntiAlias(true);</code></pre><p>  }</p>
-<p>  @Override<br>  protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {</p>
-<pre><code>return maskBitmap(pool, toTransform, outWidth, outHeight);</code></pre><p>  }</p>
-<p>  private Bitmap maskBitmap(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {</p>
-<pre><code>if (source == null) return null;
-srcRec.right = source.getWidth();
-srcRec.bottom = source.getHeight();
-toRec.right = outWidth;
-toRec.bottom = outHeight;
-Bitmap result = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888);
-Canvas canvas = new Canvas(result);
-canvas.drawBitmap(source, srcRec, toRec, paint);
-Bitmap bitmap = BitmapUtils.getBitmap(toRec.width(), toRec.height(), ScreenUtils.dp2px(radius), color);
-canvas.drawBitmap(bitmap, srcRec, toRec, paint);
-return result;</code></pre><p>  }</p>
-<p>  @Override<br>  public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {</p>
-<pre><code>messageDigest.update((ID + color + radius).getBytes(CHARSET));</code></pre><p>  }</p>
-<p>  @Override<br>  public boolean equals(Object o) {</p>
-<pre><code>if (!(o instanceof MxImageMaskTransformation)) {
-    return false;
-}
-MxImageMaskTransformation temp = (MxImageMaskTransformation) o;
-return temp.color == color &amp;&amp; temp.radius == radius;</code></pre><p>  }</p>
-<p>  @Override<br>  public int hashCode() {</p>
-<pre><code>return ID.hashCode() + color + radius * 10;</code></pre><p>  }<br>}<br>‘’’</p>
-</li>
-</ul>
-<h5 id="动态生成图片"><a href="#动态生成图片" class="headerlink" title="动态生成图片"></a>动态生成图片</h5><ul>
+<pre><code>import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+
+import androidx.annotation.NonNull;
+
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.mxbc.mxsa.R;
+
+import java.security.MessageDigest;
+
+/**
+ * 自定义图片layer
+ */
+public class MaskTransformation extends BitmapTransformation {
+    private static final int VERSION = 1;
+    private static final String ID =
+            &quot;com.mxbc.mxsa.base.utils.MaskTransformation.&quot; + VERSION;
+    private int color;
+    private int radius;
+    private Paint paint = new Paint();
+    private Rect srcRec = new Rect();
+    private Rect toRec = new Rect();
+
+    public MaskTransformation() {
+        this(Color.parse(&quot;#10000000&quot;), 0);
+    }
+
+    public MaskTransformation(int color, int radius) {
+        this.color = color;
+        this.radius = radius;
+        paint.setAntiAlias(true);
+    }
+
+    @Override
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+        return maskBitmap(pool, toTransform, outWidth, outHeight);
+    }
+
+    private Bitmap maskBitmap(BitmapPool pool, Bitmap source, int outWidth, int outHeight) {
+        if (source == null) return null;
+        srcRec.right = source.getWidth();
+        srcRec.bottom = source.getHeight();
+        toRec.right = outWidth;
+        toRec.bottom = outHeight;
+        Bitmap result = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+        canvas.drawBitmap(source, srcRec, toRec, paint);
+        Bitmap bitmap = BitmapUtils.getBitmap(toRec.width(), toRec.height(), ScreenUtils.dp2px(radius), color);
+        canvas.drawBitmap(bitmap, srcRec, toRec, paint);
+        return result;
+    }
+
+    @Override
+    public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
+        messageDigest.update((ID + color + radius).getBytes(CHARSET));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MxImageMaskTransformation)) {
+            return false;
+        }
+        MxImageMaskTransformation temp = (MxImageMaskTransformation) o;
+        return temp.color == color &amp;&amp; temp.radius == radius;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID.hashCode() + color + radius * 10;
+    }
+}</code></pre><h5 id="动态生成图片"><a href="#动态生成图片" class="headerlink" title="动态生成图片"></a>动态生成图片</h5><ul>
 <li>要点</li>
 </ul>
 <ol>
@@ -370,66 +401,74 @@ return temp.color == color &amp;&amp; temp.radius == radius;</code></pre><p>  }<
 <li>创建的图片使用弱引用缓存</li>
 <li>优先使用缓存的图片</li>
 </ol>
-<p>‘’’<br>import android.graphics.Bitmap;<br>import android.graphics.Canvas;<br>import android.graphics.Paint;<br>import android.graphics.RectF;</p>
-<p>import java.lang.ref.WeakReference;<br>import java.util.HashMap;<br>import java.util.Map;</p>
-<p>/**</p>
-<ul>
-<li><p>动态生成图片</p>
-</li>
-<li><p>/<br>public class BitmapUtils {<br>  /**</p>
-<ul>
-<li><p>缓存动态图片，提升效率</p>
-</li>
-<li><p>/<br>private static Map&lt;String, WeakReference<Bitmap>&gt; bitmapCache = new HashMap&lt;&gt;();</Bitmap></p>
-<p>/**</p>
-</li>
-<li><p>动态获取bitmap</p>
-</li>
-<li></li>
-<li><p>@param width  图片高度</p>
-</li>
-<li><p>@param height 图片宽度</p>
-</li>
-<li><p>@param radius 图片圆角</p>
-</li>
-<li><p>@param color  图片颜色</p>
-</li>
-<li><p>@return 动态生成图片</p>
-</li>
-<li><p>/<br>public static Bitmap getBitmap(int width, int height, int radius, int color) {<br>  String key = getKey(width, height, radius, color);<br>  Bitmap bitmap = getCacheBitmap(key);<br>  if (null == bitmap) {</p>
-<pre><code>bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-Canvas canvas = new Canvas(bitmap);
-Paint paint = new Paint();
-paint.setColor(color);
-paint.setAntiAlias(true);
-paint.setStyle(Paint.Style.FILL_AND_STROKE);
-canvas.drawRoundRect(new RectF(0, 0, width, height), radius, radius, paint);
-bitmapCache.put(key, new WeakReference&lt;&gt;(bitmap));</code></pre><p>  }<br>  return bitmap;<br>}</p>
-<p>/**</p>
-</li>
-<li><p>生成缓存key值</p>
-</li>
-<li><p>/<br>private static String getKey(int width, int height, int radius, int color) {<br>  return “Bitmap” + width + height + radius + color;<br>}</p>
-<p>/**</p>
-</li>
-<li><p>获取缓存的图片</p>
-</li>
-<li></li>
-<li><p>@param key 图片key</p>
-</li>
-<li><p>/<br>private static Bitmap getCacheBitmap(String key) {<br>  if (bitmapCache.containsKey(key)) {</p>
-<pre><code>WeakReference&lt;Bitmap&gt; bitmapWeakReference = bitmapCache.get(key);
-if (null != bitmapWeakReference) {
-    Bitmap bitmap = bitmapWeakReference.get();
-    if (null != bitmap &amp;&amp; !bitmap.isRecycled()) {
+<pre><code>import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 动态生成图片
+ */
+public class BitmapUtils {
+    /**
+     * 缓存动态图片，提升效率
+     */
+    private static Map&lt;String, WeakReference&lt;Bitmap&gt;&gt; bitmapCache = new HashMap&lt;&gt;();
+
+    /**
+     * 动态获取bitmap
+     *
+     * @param width  图片高度
+     * @param height 图片宽度
+     * @param radius 图片圆角
+     * @param color  图片颜色
+     * @return 动态生成图片
+     */
+    public static Bitmap getBitmap(int width, int height, int radius, int color) {
+        String key = getKey(width, height, radius, color);
+        Bitmap bitmap = getCacheBitmap(key);
+        if (null == bitmap) {
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint();
+            paint.setColor(color);
+            paint.setAntiAlias(true);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            canvas.drawRoundRect(new RectF(0, 0, width, height), radius, radius, paint);
+            bitmapCache.put(key, new WeakReference&lt;&gt;(bitmap));
+        }
         return bitmap;
     }
-}</code></pre><p>  }<br>  return null;<br>}<br>}<br>‘’’</p>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>初步想法是使用网上开源的解决方案，但开源方案实现的蒙层效果均不太理想，因此分享出来自己造的轮子，希望给遇到同一问题的开发者提供思路。</p>
+
+    /**
+     * 生成缓存key值
+     */
+    private static String getKey(int width, int height, int radius, int color) {
+        return &quot;Bitmap&quot; + width + height + radius + color;
+    }
+
+    /**
+     * 获取缓存的图片
+     *
+     * @param key 图片key
+     */
+    private static Bitmap getCacheBitmap(String key) {
+        if (bitmapCache.containsKey(key)) {
+            WeakReference&lt;Bitmap&gt; bitmapWeakReference = bitmapCache.get(key);
+            if (null != bitmapWeakReference) {
+                Bitmap bitmap = bitmapWeakReference.get();
+                if (null != bitmap &amp;&amp; !bitmap.isRecycled()) {
+                    return bitmap;
+                }
+            }
+        }
+        return null;
+    }
+}</code></pre><h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>初步想法是使用网上开源的解决方案，但开源方案实现的蒙层效果均不太理想，因此分享出来自己造的轮子，希望给遇到同一问题的开发者提供思路。</p>
 
       
     </div>
@@ -441,7 +480,7 @@ if (null != bitmapWeakReference) {
         <p><span>本文标题:</span><a href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/">Glide图片加载添加蒙层</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
         <p><span>发布时间:</span>2020-05-15, 14:00:00</p>
-        <p><span>最后更新:</span>2020-05-15, 14:38:57</p>
+        <p><span>最后更新:</span>2020-05-15, 14:41:41</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/" title="Glide图片加载添加蒙层">https://littlegrow.top/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/</a>
             <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

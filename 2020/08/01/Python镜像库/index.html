@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="短时间内大量访问某些数据可认定为热点数据，如果这部分数据均从缓存或数据库获取可能造成缓存穿透、缓存击穿等问题，将这部分数据在本地做缓存很有必要。">
+<meta name="description" content="pip下载不下来时使用国内镜像库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="热点缓存简单实现">
-<meta property="og:url" content="https://littlegrow.top/2019/08/29/server-20190829-server-mem-cache/index.html">
+<meta property="og:title" content="我的工具库">
+<meta property="og:url" content="https://littlegrow.top/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/index.html">
 <meta property="og:site_name" content="刘雷刚的博客">
-<meta property="og:description" content="短时间内大量访问某些数据可认定为热点数据，如果这部分数据均从缓存或数据库获取可能造成缓存穿透、缓存击穿等问题，将这部分数据在本地做缓存很有必要。">
+<meta property="og:description" content="pip下载不下来时使用国内镜像库">
 <meta property="og:locale" content="ch">
-<meta property="article:published_time" content="2019-08-29T13:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-06T01:13:30.913Z">
+<meta property="article:published_time" content="2020-07-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-01T01:13:24.367Z">
 <meta property="article:author" content="littlegrow">
 <meta name="twitter:card" content="summary">
 
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>热点缓存简单实现 | 刘雷刚的博客</title>
+<title>我的工具库 | 刘雷刚的博客</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -271,11 +271,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-server-20190829-server-mem-cache" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Python镜像库" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/08/29/server-20190829-server-mem-cache/" class="article-date">
-      <time datetime="2019-08-29T13:00:00.000Z" itemprop="datePublished">2019-08-29</time>
+      <a href="/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/" class="article-date">
+      <time datetime="2020-07-31T16:00:00.000Z" itemprop="datePublished">2020-08-01</time>
 </a>
     </div>
   
@@ -288,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      热点缓存简单实现
+      我的工具库
     </h1>
   
 
@@ -297,7 +297,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%86%85%E5%AD%98%E7%BC%93%E5%AD%98/">内存缓存</a>
+    <a class="article-category-link" href="/categories/%E9%95%9C%E5%83%8F%E5%BA%93/">镜像库</a>
     </div>
 
 
@@ -309,61 +309,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><br>
-
-<p>短时间内大量访问某些数据可认定为热点数据，如果这部分数据均从缓存或数据库获取可能造成缓存穿透、缓存击穿等问题，将这部分数据在本地做缓存很有必要。<br>另外后台开发一些管理资源类单机系统时，需要用到少量数据的缓存服务，申请redis等缓存资源太过重量，可考虑将这部分数据缓存在内存中，防止每次请求都查库，提高单机系统吞吐率。</p>
-<br>
-
-<p>知识点积累：</p>
-<ul>
-<li>缓存穿透</li>
-</ul>
-<br>
-
-<p>指查询一个数据库一定不存在的数据，大量的请求同时压向数据库，导致系统瘫痪。这时用户很可能是攻击者，攻击会导致数据库压力过大。</p>
-<p>解决方案：</p>
-<pre><code>接口层增加校验，如参数有效性拦截
-从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击</code></pre><br>
-
-<ul>
-<li>缓存击穿</li>
-</ul>
-<br>
-
-<p>缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力</p>
-<pre><code>设置热点数据
-访问数据库加互斥锁
-访问数据库前设置热点数据默认值为空，短时间内其他请求返回默认值，查库成功后设置缓存，后续请求正常</code></pre><p>本文讲述我如何处理这部分数据。</p>
-<br>
-
-<h3 id="缓存接口"><a href="#缓存接口" class="headerlink" title="缓存接口"></a>缓存接口</h3><br>
-
-<p>以求最简单的方式缓存这部分数据，因此接口设计越简单越好，定义了如下几个接口：</p>
-<br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public interface IMemCacheService &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 缓存数据</span><br><span class="line">     *</span><br><span class="line">     * @param key   缓存Key</span><br><span class="line">     * @param value 缓存内容</span><br><span class="line">     * @return 缓存是否添加成功</span><br><span class="line">     *&#x2F;</span><br><span class="line">    &lt;T&gt; boolean saveCache(String key, T value);</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 缓存数据</span><br><span class="line">     *</span><br><span class="line">     * @param key       缓存Key</span><br><span class="line">     * @param value     缓存内容</span><br><span class="line">     * @param aliveTime 缓存存活时间</span><br><span class="line">     * @return 缓存是否添加成功</span><br><span class="line">     *&#x2F;</span><br><span class="line">    &lt;T&gt; boolean saveCache(String key, T value, long aliveTime);</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 读取缓存</span><br><span class="line">     *</span><br><span class="line">     * @param key 缓存Key</span><br><span class="line">     * @return 缓存内容, 无缓存返回 null</span><br><span class="line">     *&#x2F;</span><br><span class="line">    &lt;T&gt; T getCache(String key);</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 清理缓存</span><br><span class="line">     *&#x2F;</span><br><span class="line">    boolean clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="缓存实现"><a href="#缓存实现" class="headerlink" title="缓存实现"></a>缓存实现</h3><br>
-
-<p>设计要点：</p>
-<br>
-
-<pre><code>软引用持有缓存，在系统资源紧张时可被回收；
-支持多线程业务场景；
-支持设置默认存活时间和自定义存活时间；
-除主动查找判断存活状态以外，需要定时清理失效缓存，防止无限增长。</code></pre><br>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">import java.lang.ref.SoftReference;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.concurrent.ConcurrentHashMap;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.ScheduledExecutorService;</span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class MemCacheServiceImpl implements IMemCacheService &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 默认存活时间5分钟</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private static final long ALIVE_TIME_DEFAULT &#x3D; 5 * 60 * 1000;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 定时清理任务执行间隔，默认 20 分钟</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private static final int CLEAR_TIME_DEFAULT &#x3D; 20;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 使用 &#123;@link ConcurrentHashMap&#125; 存储缓存，支持多线程业务场景</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private ConcurrentHashMap&lt;String, SoftReference&lt;CacheItem&gt;&gt; cacheMap &#x3D; new ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 单线程池，间隔定时执行缓存清理任务</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private final ScheduledExecutorService executorService &#x3D; Executors.newSingleThreadScheduledExecutor();</span><br><span class="line">    private final Object lock &#x3D; new Object();</span><br><span class="line">    private boolean submitCleanRunnable &#x3D; false;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 缓存清理任务</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private Runnable cleanRunnable &#x3D; () -&gt; &#123;</span><br><span class="line">        List&lt;String&gt; waitRemoveKeys &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        &#x2F;&#x2F; 找出失效缓存</span><br><span class="line">        for (Map.Entry&lt;String, SoftReference&lt;CacheItem&gt;&gt; entry : cacheMap.entrySet()) &#123;</span><br><span class="line">            CacheItem item &#x3D; entry.getValue().get();</span><br><span class="line">            if (item &#x3D;&#x3D; null || !item.isAlive()) &#123;</span><br><span class="line">                waitRemoveKeys.add(entry.getKey());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; 清理失效缓存</span><br><span class="line">        for (String key : waitRemoveKeys) &#123;</span><br><span class="line">            cacheMap.remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public &lt;T&gt; boolean saveCache(String key, T value) &#123;</span><br><span class="line">        return saveCache(key, value, ALIVE_TIME_DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public &lt;T&gt; boolean saveCache(String key, T value, long aliveTime) &#123;</span><br><span class="line">        &#x2F;&#x2F; 双重校验锁保证多线程业务场景下清理任务仅被提交一次</span><br><span class="line">        if (!submitCleanRunnable) &#123;</span><br><span class="line">            synchronized (lock) &#123;</span><br><span class="line">                if (!submitCleanRunnable) &#123;</span><br><span class="line">                    executorService.scheduleAtFixedRate(cleanRunnable, CLEAR_TIME_DEFAULT, CLEAR_TIME_DEFAULT, TimeUnit.MINUTES);</span><br><span class="line">                &#125;</span><br><span class="line">                submitCleanRunnable &#x3D; true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        CacheItem cacheItem &#x3D; new CacheItem(aliveTime, value);</span><br><span class="line">        cacheMap.put(key, new SoftReference&lt;&gt;(cacheItem));</span><br><span class="line">        return cacheMap.containsKey(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public &lt;T&gt; T getCache(String key) &#123;</span><br><span class="line">        if (cacheMap.containsKey(key)) &#123;</span><br><span class="line">            CacheItem item &#x3D; cacheMap.get(key).get();</span><br><span class="line">            if (item !&#x3D; null &amp;&amp; item.isAlive()) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    return (T) item.getValue();</span><br><span class="line">                &#125; catch (ClassCastException e) &#123;</span><br><span class="line">                    return null;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                &#x2F;&#x2F; 主动清理失效缓存</span><br><span class="line">                cacheMap.remove(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean clear() &#123;</span><br><span class="line">        cacheMap.clear();</span><br><span class="line">        return cacheMap.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static class CacheItem &#123;</span><br><span class="line">        private long aliveUntil;</span><br><span class="line">        private Object value;</span><br><span class="line"></span><br><span class="line">        CacheItem(long aliveTime, Object value) &#123;</span><br><span class="line">            this.value &#x3D; value;</span><br><span class="line">            &#x2F;&#x2F; 记录缓存存活到期时间，判断当前时间与此记录值，从而判定缓存是否过期</span><br><span class="line">            this.aliveUntil &#x3D; System.currentTimeMillis() + aliveTime;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean isAlive() &#123;</span><br><span class="line">            return System.currentTimeMillis() &lt; aliveUntil;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Object getValue() &#123;</span><br><span class="line">            return value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<br>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><br>
-
-<p>仅少量数据需要缓存以提高系统性能时，可采用上述基于内存缓存实现方案。<br>也可使用此方案缓存热点数据</p>
-<p><br><br><br><br></p>
-
+        <p>国内镜像库：</p>
+<p><a href="http://pypi.douban.com/simple/" target="_blank" rel="noopener">http://pypi.douban.com/simple/</a> 豆瓣</p>
+<p><a href="http://mirrors.aliyun.com/pypi/simple/" target="_blank" rel="noopener">http://mirrors.aliyun.com/pypi/simple/</a> 阿里</p>
+<p><a href="http://pypi.hustunique.com/simple/" target="_blank" rel="noopener">http://pypi.hustunique.com/simple/</a> 华中理工大学</p>
+<p><a href="http://pypi.sdutlinux.org/simple/" target="_blank" rel="noopener">http://pypi.sdutlinux.org/simple/</a> 山东理工大学</p>
+<p><a href="http://pypi.mirrors.ustc.edu.cn/simple/" target="_blank" rel="noopener">http://pypi.mirrors.ustc.edu.cn/simple/</a> 中国科学技术大学</p>
+<p><a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="noopener">https://pypi.tuna.tsinghua.edu.cn/simple</a> 清华</p>
+<p>例如:</p>
+<pre><code>pip install Pillow -i https://pypi.tuna.tsinghua.edu.cn/simple</code></pre>
       
     </div>
     
@@ -371,13 +325,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/08/29/server-20190829-server-mem-cache/">热点缓存简单实现</a></p>
+        <p><span>本文标题:</span><a href="/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/">我的工具库</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">littlegrow</a></p>
-        <p><span>发布时间:</span>2019-08-29, 21:00:00</p>
-        <p><span>最后更新:</span>2020-05-06, 09:13:30</p>
+        <p><span>发布时间:</span>2020-08-01, 00:00:00</p>
+        <p><span>最后更新:</span>2020-08-01, 09:13:24</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/08/29/server-20190829-server-mem-cache/" title="热点缓存简单实现">https://littlegrow.top/2019/08/29/server-20190829-server-mem-cache/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2019/08/29/server-20190829-server-mem-cache/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/" title="我的工具库">https://littlegrow.top/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://littlegrow.top/2020/08/01/Python%E9%95%9C%E5%83%8F%E5%BA%93/　　作者: littlegrow" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -389,16 +343,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/">
-                    java实现常见算法
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/08/28/third-190828-okhttp/">
-                    OKHTTP简单使用总结
+                <a href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/">
+                    Glide图片加载添加蒙层
                 </a>
             </div>
         
@@ -409,7 +357,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存接口"><span class="toc-number">2.</span> <span class="toc-text">缓存接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存实现"><span class="toc-number">3.</span> <span class="toc-text">缓存实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+    
 </div>
 <style>
     .left-col .switch-btn,
@@ -460,15 +408,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/08/30/algorithm-190830-java-%E7%AE%97%E6%B3%95/" title="上一篇: java实现常见算法">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/08/28/third-190828-okhttp/" title="下一篇: OKHTTP简单使用总结">
+            <a href="/2020/05/15/Android-200515-Glide%E7%BB%99%E5%9B%BE%E7%89%87%E6%B7%BB%E5%8A%A0%E8%92%99%E5%B1%82/" title="下一篇: Glide图片加载添加蒙层">
                 <i class="fa fa-angle-right"></i>
             </a>
         
